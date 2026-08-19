@@ -1,0 +1,2697 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <!-- Google Fonts Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Font Awesome CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css'>
+    <!-- CSS STYLING BOOTSTRAP --->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet"> -->
+  <style>
+    body {
+    background: #d9e8f9;  /* fallback for old browsers */
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: #000;
+    }
+    .student-profile .card {
+        border-radius: 10px;
+    }
+    .student-profile .card .card-header .profile_img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin: 10px auto;
+        border: 10px solid #ccc;
+        border-radius: 50%;
+    }
+    .student-profile .card h3 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .student-profile .card p {
+        font-size: 16px;
+        color: #000;
+    }
+    .student-profile .table th,
+    .student-profile .table td {
+        font-size: 14px;
+        padding: 5px 10px;
+        color: #000;
+    }
+   .material-symbols-outlined {
+     font-variation-settings:
+     'FILL' 1,
+     'wght' 700,
+     'GRAD' 200,
+     'opsz' 48
+}
+.btn.btn-info {
+      margin-top: 40px; /* adjust value for desired spacing */
+}
+.form-group.row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#loadingData{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:10000;
+  width:100vw;
+  height:100vh;
+  background-color: rgba(255,255,255,0.9);
+}
+.ticTable .table-wrapper {
+    width: 100%;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.ticTable .table-title {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+}
+.ticTable .table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+.ticTable .table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+.ticTable .table-title .reload {
+    float: left;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+.ticTable .table-title .add-new i {
+    margin-right: 4px;
+}
+.ticTable .table-title .reload i {
+    margin-right: 4px;
+}
+.ticTable table.table {
+    /* table-layout: fixed; */
+}
+.ticTable table.table tr th,
+.ticTable table.table tr td,
+.ticTable2 table.table tr th,
+.ticTable2 table.table tr td,
+.ticTable3 table.table tr th,
+.ticTable3 table.table tr td
+ {
+    border-color: #808080;
+}
+.ticTable table.table th i,
+.ticTable2 table.table th i,
+.ticTable3 table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.ticTable table.table th:last-child,
+.ticTable2 table.table th:last-child,
+.ticTable3 table.table th:last-child {
+    width: 100px;
+    text-align: center;
+}
+.ticTable table.table td a,
+.ticTable2 table.table td a,
+.ticTable3 table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}
+/* .ticTable table.table td a.add {
+    color: #27C46B;
+} */
+.ticTable table.table td a.edit {
+    color: #FFC107;
+}
+.ticTable table.table td a.delete {
+    color: #E34724;
+}
+.ticTable table.table td i,
+.ticTable2 table.table td i,
+.ticTable3 table.table td i {
+    font-size: 19px;
+}
+/* .ticTable table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}     */
+.ticTable table.table .form-control,
+.ticTable2 table.table .form-control,
+.ticTable3 table.table .form-control
+ {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+.ticTable table.table .form-control.error,
+.ticTable2 table.table .form-control.error,
+.ticTable3 table.table .form-control.error {
+    border-color: #f50000;
+}
+.ticTable table.table td .add {
+    display: none;
+}
+/* Fixed header and scrollable body */
+.ticTable .fixTableHead,
+.ticTable2 .fixTableHead,
+.ticTable3 .fixTableHead {
+    overflow-y: auto;
+    height: 500px;
+}
+.ticTable .fixTableHead thead th,
+.ticTable2 .fixTableHead thead th,
+.ticTable3 .fixTableHead thead th {
+    position: sticky;
+    top: 0;
+}
+.ticTable table,
+.ticTable2 table,
+.ticTable3 table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.ticTable th,
+.ticTable td,
+.ticTable2 th,
+.ticTable2 td,
+.ticTable3 th,
+.ticTable3 td {
+    padding: 8px 15px;
+    border: 2px solid #529432;
+    text-align: center;
+}
+.ticTableA th,
+.ticTable th,
+.ticTable2 th,
+.ticTable3 th {
+    background: #000080;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    text-align: center;
+}
+/* Conditional row color */
+.ticTable .highlight,
+.ticTable2 .highlight,
+.ticTable3 .highlight {
+    background-color: #ccc;
+}
+/* Hide unwanted rows */
+/* .ticTable td:nth-child(1), */
+.ticTable td:nth-child(3),
+.ticTable td:nth-child(4),
+.ticTable td:nth-child(5),
+.ticTable td:nth-child(6),
+.ticTable td:nth-child(7),
+.ticTable td:nth-child(8),
+.ticTable td:nth-child(11) {
+    display: none;
+    background-color: white;
+}
+/* Hide unwanted rows */
+/* .ticTable td:nth-child(1), */
+.ticTable2 td:nth-child(3),
+.ticTable2 td:nth-child(4),
+.ticTable2 td:nth-child(5),
+.ticTable2 td:nth-child(6),
+.ticTable2 td:nth-child(7),
+.ticTable2 td:nth-child(8),
+.ticTable2 td:nth-child(9),
+.ticTable2 td:nth-child(12) {
+    display: none;
+    background-color: white;
+}
+/* Hide unwanted rows */
+/* .ticTable td:nth-child(1), */
+.ticTable3 td:nth-child(3),
+.ticTable3 td:nth-child(4),
+.ticTable3 td:nth-child(5),
+.ticTable3 td:nth-child(6),
+.ticTable3 td:nth-child(7),
+.ticTable3 td:nth-child(8),
+.ticTable3 td:nth-child(9),
+.ticTable3 td:nth-child(10),
+.ticTable3 td:nth-child(14) {
+    display: none;
+    background-color: white;
+}
+/* Mascot video card (welcome animation) */
+.mascot-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto 20px;
+}
+.mascot-float {
+    animation: mascotFloat 4.5s ease-in-out infinite;
+    perspective: 800px;
+}
+@keyframes mascotFloat {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+.mascot-tilt {
+    width: 240px;
+    height: 240px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #cee0f8;
+    box-shadow: 0 20px 35px rgba(18, 59, 87, 0.18), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+.mascot-tilt video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+#chatbotFloatBtn {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #14b8a6;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+}
+#chatbotFloatBtn video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+  </style>
+  </head>
+  <body>
+    <img src="https://i.ibb.co/FJkH7P6/ADS-2020.png" alt="ADS-2020" border="0" style="max-width:100%; height:auto; display: block;
+  margin-left: auto;
+  margin-right: auto;">
+  <br>
+  <div class="mascot-wrap">
+    <div class="mascot-float">
+      <div class="mascot-tilt" id="mascotTiltWrap">
+        <video id="mascotVideo" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+  </div>
+  <script>
+    const WELCOMING_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/welcoming.mp4";
+    const WAVE_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/wave.mp4";
+    const THUMBS_UP_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/thumbsup.mp4";
+    const NO_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/no.mp4";
+    const TL_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/tl.mp4";
+    document.getElementById('mascotVideo').src = WELCOMING_VIDEO;
+    (function(){
+      var tiltWrap = document.getElementById('mascotTiltWrap');
+      var maxTilt = 10;
+      tiltWrap.addEventListener('mousemove', function(e){
+        var rect = tiltWrap.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        var rotateY = (x - 0.5) * 2 * maxTilt;
+        var rotateX = (0.5 - y) * 2 * maxTilt;
+        tiltWrap.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      });
+      tiltWrap.addEventListener('mouseleave', function(){
+        tiltWrap.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    })();
+  </script>
+  <div class="container mt-4">
+      <div class="form-group row">
+        <!-- <label style="text-align:right" for="inputPassword" class="col-sm-3 col-3 col-form-label">Password</label> -->
+        <div class="col-lg-4 col-9">
+          <input type="text" class="form-control" id="inputPassword" placeholder="Enter Your ID" style="text-align:center">
+          <span id='idStorage' style="display:none"></span>
+        </div>
+        <button class="btn btn-info col-sm-2 col-5 mb-2" onclick="setData()" id="confirm">Submit</button>
+      </div>
+    </div>
+    <div class="student-profile py-4" style="display:none">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card shadow-sm">
+              <div class="card-header bg-transparent text-center">
+                <!-- <img id="data0" class="profile_img" src="https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Photo.png" alt="student dp"> -->
+                <h3>Welcome</h3>
+                <b><span id="data0" style= "color:#a64d79; font-size:18px"></span></b><p>
+                <b><span id="data12" style= "color:#a64d79; font-size:18px">Arabic Name</span></b><p>
+                <b><span id="data14" style= "color:#a64d79; font-size:18px">Job title</span></b>
+                <!--<a href="<?!= url ?>">Reload</a>-->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div style="height: 20px"></div>
+            <div class="card shadow-sm">
+              <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Attendance Information</h3>
+                <br>
+                <h3 style="text-align:center; color:#000080" class="mb-0" id="monthNameYear"></h3>
+                <br>
+              </div>
+              <div class="card-body pt-0">
+                <table class="table table-bordered">
+                   <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>ID</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data1" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>Center</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data2" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>Nationality</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data13" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>Civil ID</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data16" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>Mobile No.</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data17" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#34a853"><b>تاريخ المباشرة بالاحمدي</b></td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data15" style="text-align:center; color:#34a853"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#007bff">Total Start Permissions Per/Month</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data3" style="text-align:center; color:#007bff"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#007bff">Total End Permissions Per/Month</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data4" style="text-align:center; color:#007bff"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#007bff">Total Permissions Per/Month</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data5" style="text-align:center; color:#007bff"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#980000">Total Sick Leaves Submitted Per/Month</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data6" style="text-align:center; color:#980000"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#980000">Total Sick Leave Days Per/Year</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data7" style="text-align:center; color:#980000"></th>
+                  </tr>
+                  <tr>
+                    <td width="10%" style="text-align:center; color:#e1a800">Vacation (عرضي)</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data8" style="text-align:center; color:#e1a800"></th>
+                  </tr>
+                  <!-- the last id is here. if you want add more column, then add an item and new id="data11" -->
+                  <!-- copy from here <tr> below -->
+                 <tr>
+                    <td width="10%" style="text-align:center; color:#e1a800">Total Vacation Days Per/Year</td>
+                    <td width="2%" style="text-align:center">:</td>
+                    <th width="10%" id="data9" style="text-align:center; color:#e1a800"></th>
+                  </tr>
+                  <!-- until here -->
+                </table>
+              </div>
+            </div>
+              <div style="height: 20px"></div>
+            <div class="card shadow-sm" style="display:block">
+              <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Khafarat</h3>
+              </div>
+              <div class="card-body pt-0">
+                  <p id="data10"></p>     <!--go to 821 to adjust  this function-->
+              </div>
+            </div>
+            <div style="height: 20px"></div>
+            <div class="card shadow-sm" style="display:block">
+              <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>On Calls</h3>
+              </div>
+              <div class="card-body pt-0">
+                  <p id="data11"></p>     <!--go to 821 to adjust  this function-->
+              </div>
+            </div>
+          <div class="card-header bg-transparent border-0">
+                <div style="height: 20px; text-center"></div>
+            <div class="card shadow-sm" style="display:block">
+              <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i> Request For :</h3>
+              </div>
+              <br>
+              <div class="mt-2" style="text-indent: 10px; font-size: 12px;">
+              <a style="text-decoration: none; text-align: center; font-size: 20px; background-color:navey;  color: navey; border:3px solid navey; border-radius: 15px; hight: 50px; display: flex; justify-content: center; align-items: center;" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal" ><b><span class="material-symbols-outlined">history_toggle_off</span>
+                Permission</b></a>
+            </div>
+            <br>
+            <div class="mt-2" style="text-indent: 10px; font-size: 12px;">
+              <a style="text-decoration: none; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #980000; border:3px solid navey; border-radius: 15px; hight: 50px;" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal2">
+              <span class="material-symbols-outlined">medical_services</span>
+              <b><span>Sick Leave</b></span>
+              </a>
+            </div>
+            <br>
+            <div class="mt-2" style="text-indent: 10px; font-size: 12px;">
+              <a style="text-decoration: none; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #ebb615; border:3px solid navey; border-radius: 15px; hight: 50px" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal3"><b><span class="material-symbols-outlined">flight_takeoff</span>
+                Vacation</b></a>
+            </div>
+            <br>
+            <div class="mt-2" style="text-indent: 10px; font-size: 12px; display: none">
+              <a style="text-decoration: none; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #ff6d01; border:3px solid navey; border-radius: 15px; hight: 50px" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal4"><b><span class="material-symbols-outlined">supervisor_account</span>
+                Daily Duty Change</b></a>
+            </div>
+            <!-- <br> -->
+            <div class="mt-2" style="none; text-indent: 10px; font-size: 12px;">
+              <a style="text-decoration: none; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #46bdc6; border:3px solid navey; border-radius: 15px; hight: 50px" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal5"><b><span class="material-symbols-outlined">edit_calendar</span>
+                Weekend Duty Change</b></a>
+            </div>
+            <br>
+            <div class="mt-2" style="text-indent: 10px; font-size: 12px;">
+              <a style="text-decoration: none; display: flex; justify-content: center; align-items: center; font-size: 20px; color: #8e7cc3; border:3px solid navey; border-radius: 15px; hight: 50px" href="javascript:void(0);" onclick="clr()" data-toggle="modal" data-target="#exampleModal6"><b><span class="material-symbols-outlined">cancel_presentation</span>
+                Cancellation</b></a>
+            </div>
+              <div class="card-body pt-0">
+                  <!--<p id="data5"></p>-->
+              </div>
+            </div>
+              </div>
+          <div class="card-header bg-transparent border-0">
+           <!-- <div style="height: 20px; text-center"></div> -->
+            <div class="card shadow-sm" style="display:block; display: flex; justify-content: center; align-items: center;"><button id="chApp" class="btn btn-primary mb-2" onclick="checkApproval()" style= "margin-top:8px">Check Approval Progress</button></div>
+          </div>
+          <!-- Function Weekend Duty Approval Request START here -->
+          <div class="card-header bg-transparent border-0">
+           <!-- <div style="height: 20px; text-center"></div> -->
+            <div class="card shadow-sm" style="display:block; display: flex; justify-content: center; align-items: center;"><button id="appReq" class="btn btn-dark mb-2" onclick="checkApprovalRequest()" style= "margin-top:8px">Weekend Duty Approval Request</button>
+              <div id="divApprovalRequestInfo" style="padding: 20px; display:none"><span id="approvalRequestInfo"></span><span style="display:none" id="btnIdx"></span>
+              <br>
+              <br>
+              <div><button disabled id="yes" class="btn btn-success mb-2" onclick="yesApproved()">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button disabled id="no" class="btn btn-danger mb-2" onclick="noApproved()">No</button></div>
+              </div>
+              <!-- <button id="vacationsPDF" class="btn btn-dark mb-2" onclick="checkVacationsPdf()" style= "margin-top:8px; color: #ebb615">Vacations PDFs</button> -->
+            </div>
+          <div class="card-header bg-transparent border-0">
+            <div class="card shadow-sm" style="display:block; display: flex; justify-content: center; align-items: center;">
+              <button id="vacationsPDF" class="btn btn-warning mb-2" onclick="checkVacationsPdf()" style= "margin-top:8px; color: #FFFFFF ; background-color: #ebb615">Vacations PDFs</button>
+            </div>
+          </div>
+          <div class="card-header bg-transparent border-0">
+            <div class="card shadow-sm" style="display:block; display: flex; justify-content: center; align-items: center;">
+              <button id="uploadPdfsBtn" class="btn mb-2" onclick="document.getElementById('uploadChoice8').selectedIndex = 0;" data-toggle="modal" data-target="#exampleModal8" style="margin-top:8px; color: #FFFFFF; background-color: #a64d79">Upload your PDFs</button>
+            </div>
+          </div>
+          </div>
+          <!-- Function Weekend Duty Approval Request END here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id='invalid' style="display:none; text-align:center" class="mt-4">
+      <span style="font-size: 30px">Please Enter Correct ID to Access Your Profile<p><p></span><br><br><br><br><a style="background-color: navy; border: none;border-radius: 40px; color: white; padding: 20px 40px; text-align: center; text-decoration: none; display: inline-block; font-size: 30px; margin: 6px 3px; font-family:confortaa;" href="<?!= url ?> ">Reload</a>
+    </div>
+    <div id='loading' style="display:none; text-align:center; color: navy; font-size: 25px" class="mt-4">
+      <i>Loading...</i>
+    </div>
+<div id="loadingData" class="d-flex justify-content-center align-items-center invisible">
+   <div class="spinner-border spinner-border-sm" style="color: blue; width: 3rem; height: 3rem;" role="status">
+   </div>
+</div>
+
+<button id="chatbotFloatBtn" onclick="openChatbot()" title="حصه - المساعدة الرقمية">
+  <video autoplay muted loop playsinline src="https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/hessaivid.mp4"></video>
+</button>
+<br>
+<br>
+<br>
+<!-- Modal Input Permission Leave -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Permission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <textarea type="text" class="form-control" id="name" autocomplete="off" disabled></textarea>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <textarea type="text" class="form-control" id="id" autocomplete="off" disabled></textarea>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Centers:</label>
+            <select class="form-control" id="centers" disabled>
+              <option disabled selected>Choose</option>
+              <?!= centerOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="date" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Shift:</label>
+            <select class="form-control" id="shift">
+              <option>Choose</option>
+              <option>Am</option>
+              <option>Pm</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Period:</label>
+            <select class="form-control" id="period">
+              <option>Choose</option>
+              <option>Start</option>
+              <option>End</option>
+            </select>
+          </div>
+        </form>
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation1">
+          <input onchange="activateSubmit1()" type="checkbox" id="confirmation1" class="multiCheck" value="checked">
+           &nbsp;Informed the Team Leader
+        </label><br>
+      </div>
+      <div class="modal-footer">
+        <button onclick="confirmSubmit()" id="btn1" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Input Permission Leave -->
+<!-- Modal Sick Leave -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sick Leave</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name2" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" class="form-control" id="id2" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Centers:</label>
+            <select class="form-control" id="centers2" disabled>
+              <option disabled selected>Choose</option>
+              <?!= centerOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="date2" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Sick Leave Type:</label>
+            <select class="form-control" id="question2">
+              <option disabled selected>Choose the answer</option>
+              <option>Sick Leave</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Number of days:</label>
+            <input type="number" class="form-control" id="numberOf2" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Is this sick leave Before or After vacation ?</label>
+            <select class="form-control" id="question2b">
+              <option disabled selected>Choose</option>
+              <option>Yes before my vacation</option>
+              <option>Yes after my vacation</option>
+              <option>No</option>
+            </select>
+          </div>
+        </form>
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation2">
+          <input onchange="activateSubmit2()" type="checkbox" id="confirmation2" class="multiCheck" value="checked">
+           &nbsp;Informed the Team Leader
+        </label><br>
+      </div>
+      <div class="modal-footer">
+        <button onclick="confirmSubmit2()" id="btn2" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Sick Leave -->
+<!-- Modal Vacation Leave -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Vacation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name3" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" class="form-control" id="id3" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Centers:</label>
+            <select class="form-control" id="centers3" disabled>
+              <option disabled selected>Choose</option>
+              <?!= centerOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Vacation Type:</label>
+            <select class="form-control" id="question3">
+              <option disabled selected>Choose</option>
+              <option>Vacation</option>
+              <option>تمديد</option>
+              <option>Vacation (عرضي)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">From:</label>
+            <input onchange="ctDate()" type="date" class="form-control" id="from" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">To:</label>
+            <input onchange="ctDate()" type="date" class="form-control" id="to" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Number of days:</label>
+            <input disabled type="number" class="form-control" id="numberOf3" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Is there any Weekend Duty during Vacation ?</label>
+            <select class="form-control" id="question3b">
+              <option disabled selected>Choose</option>
+              <option>Yes please change it</option>
+              <option>No</option>
+            </select>
+          </div>
+        </form>
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation3">
+          <input onchange="activateSubmit3()" type="checkbox" id="confirmation3" class="multiCheck" value="checked">
+           &nbsp;Informed the Team Leader
+        </label><br>
+      </div>
+      <div class="modal-footer">
+        <button onclick="confirmSubmit3()" id="btn3" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Vacation Leave -->
+<!-- Modal Daily Duty Change Leave -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Daily Duty Change</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name4" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" class="form-control" id="id4" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Centers:</label>
+            <select class="form-control" id="centers4" disabled>
+              <option disabled selected>Choose</option>
+              <?!= centerOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">From:</label>
+            <input type="date" class="form-control" id="from4" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">To:</label>
+            <input type="date" class="form-control" id="to4" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Name of colleague that you will change in the same polyclinic :</label>
+            <select class="form-control" id="nameOfColleague">
+              <option disabled selected>Choose</option>
+              <?!= doctorNameOptions ?>
+            </select>
+          </div>
+        </form>
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation4">
+          <input onchange="activateSubmit4()" type="checkbox" id="confirmation4" class="multiCheck" value="checked">
+           &nbsp;Informed the Team Leader
+        </label><br>
+      </div>
+      <div class="modal-footer">
+        <button onclick="confirmSubmit4()" id="btn4" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Daily Duty Change Leave -->
+<!-- Modal Weekend Duty Change Leave -->
+<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Weekend Duty Change</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name5" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" class="form-control" id="id5" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Current weekend duty center :</label>
+            <select class="form-control" id="centers5">
+              <option disabled selected>Choose</option>
+              <?!= weekendCentersOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="date5" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Name of Colleague that you changed with  :</label>
+            <select class="form-control" id="nameOfColleague5">
+              <option disabled selected>Choose</option>
+              <?!= doctorNameOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Other colleague Weekend Duty Center :</label>
+            <select class="form-control" id="otherColleague">
+              <option disabled selected>Choose</option>
+              <?!= weekendCentersOptions ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Date:</label>
+            <input type="date" class="form-control" id="date5b" autocomplete="off">
+          </div>
+        </form>
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation5">
+          <input onchange="activateSubmit5()" type="checkbox" id="confirmation5" class="multiCheck" value="checked">
+           &nbsp;Informed Colleague
+        </label><br>
+      </div>
+      <div class="modal-footer">
+        <button onclick="confirmSubmit5()" id="btn5" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Weekend Duty Change Leave -->
+<!-- Modal Cancellation Leave -->
+<div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cancellation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <!-- additional checkbox to activate submit button -->
+        <label class="" for="confirmation6" style="display: none">
+          <input onchange="activateSubmit6()" type="checkbox" id="confirmation6" class="multiCheck" value="checked">
+           &nbsp;Informed the Team Leader
+        </label>
+        <div class="form-group col-md-4">
+          <label for="message-text" class="col-form-label">Cancellation of :</label>
+          <select class="form-control" id="cancellationOf" onchange="callTable()">
+            <option disabled selected>Choose</option>
+            <?!= cancellationOfOptions ?>
+          </select>
+        </div>
+        <div style="overflow-x: auto; max-width: 100%;">
+        <div id="dataTable" class="fixTableHead">
+        <table class="table table-bordered ticTableA">
+            <thead>
+                <tr>
+                    <!-- Add columns header here as many column that we will use in HTML CRUD Table -->
+                    <th>Time Stamp</th>
+                    <th>Name</th>
+                    <!-- <th>ID</th> -->
+                    <!-- <th>Center</th> -->
+                    <!-- <th>Date</th> -->
+                    <!-- <th>Shift</th> -->
+                    <!-- <th>Period</th> -->
+                    <!-- <th>Code</th> -->
+                    <th>Reports</th>
+                    <th>TML Approval Status</th>
+                    <th>Actions Btn</th>
+                    <!-- Until here -->
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="display: none" onclick="confirmSubmit6()" id="btn6" type="button" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Cancellation Leave -->
+<!-- Modal Upload Sickleave PDF -->
+<div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload your Sickleave PDF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name7" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Sick Leave:</label>
+            <select class="form-control" id="sickLeaveSummary7" onchange="fillSickLeaveCode()">
+              <option disabled selected>Choose</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Code:</label>
+            <input type="text" class="form-control" id="sickLeaveCode7" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">PDF File:</label>
+            <input type="file" class="form-control" id="pdfFile7" accept="application/pdf">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button onclick="submitSickLeaveUpload()" id="btn7" type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Upload Sickleave PDF -->
+<!-- Modal Upload Chooser -->
+<div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload your PDFs</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">What do you want to upload ?</label>
+          <select class="form-control" id="uploadChoice8" onchange="routeUploadChoice()">
+            <option disabled selected>Choose</option>
+            <option value="sick">Upload my SickLeave PDF</option>
+            <option value="vacation">Upload my Signed Vacation PDF</option>
+            <option value="eqrarawdah">Upload my اقرار عودة PDF</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Upload Chooser -->
+<!-- Modal Upload Signed Vacation PDF -->
+<div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload your Signed Vacation PDF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name9" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Vacation:</label>
+            <select class="form-control" id="vacationSummary9" onchange="fillVacationCode()">
+              <option disabled selected>Choose</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Code:</label>
+            <input type="text" class="form-control" id="vacationCode9" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">PDF File:</label>
+            <input type="file" class="form-control" id="pdfFile9" accept="application/pdf">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button onclick="submitVacationUpload()" id="btn9" type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Upload اقرار عودة PDF -->
+<div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload your اقرار عودة PDF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name10" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Vacation:</label>
+            <select class="form-control" id="eqrarawdahSummary10" onchange="fillEqrarAwdahCode()">
+              <option disabled selected>Choose</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Code:</label>
+            <input type="text" class="form-control" id="eqrarawdahCode10" autocomplete="off" disabled>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">PDF File:</label>
+            <input type="file" class="form-control" id="pdfFile10" accept="application/pdf">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button onclick="submitEqrarAwdahUpload()" id="btn10" type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Upload اقرار عودة PDF -->
+<!-- End Modal Upload Signed Vacation PDF -->
+  <!-- Bootstrap Modal Check Approval Progress -->
+  <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="approvalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="approvalModalLabel">Approval Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="approvalDetails">
+          <!-- Data will be displayed here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+<!-- <script language="JavaScript" src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>
+  <script language="JavaScript" src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script language="JavaScript" src="https://code.jquery.com/jquery-2.2.4.js" type="text/javascript"></script> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script>
+  // Opens the "حصه" chatbot in a new tab, passing the already-logged-in ID so it
+  // can auto-login instead of showing its own login screen (see ChatbotProject's
+  // doGet()/AUTO_UID).
+  function openChatbot(){
+    var uid = document.getElementById('idStorage').innerHTML.trim();
+    var chatbotUrl = 'https://script.google.com/macros/s/AKfycbxXKqmCXqp2t8Y0aw2YhlJCTdw9w5aMHIAMpoNwxe847jumsE9a_1VtL5odjD5eMtAK/exec';
+    window.open(chatbotUrl + '?uid=' + encodeURIComponent(uid), '_blank');
+  }
+
+  // Shared failure handler for google.script.run calls. Without this, a server-side
+  // error left the loadingData spinner stuck forever (only the success handler cleared
+  // it) and the user got no feedback that anything had gone wrong.
+  function handleRequestFailure(error){
+    if (!document.getElementById('loadingData').classList.contains('invisible')) {
+      document.getElementById('loadingData').classList.add('invisible');
+    }
+    console.log('Request failed: ' + (error && error.message ? error.message : error));
+    Swal.fire({
+      title: 'Error',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Something went wrong, please try again.</div>',
+      showConfirmButton: true
+    });
+  }
+  function setData(){
+    let confirm = document.getElementById('confirm');
+    confirm.innerHTML = '<i>Loading...</i>';
+    let inputPassword = document.getElementById('inputPassword');
+    if(inputPassword.value == ""){
+      // alert('Please write your id first');
+      Swal.fire({title: "", text: "Enter your ID first!", icon: "warning"});
+      confirm.innerHTML = 'Submit';
+    }else{
+      document.getElementsByClassName('py-4')[0].style.display = "none"
+      google.script.run
+      .withSuccessHandler(d => {
+          if(d == undefined){
+            confirm.innerHTML = 'Submit';
+            Swal.fire({
+              title: 'Sorry',
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Invalid ID</div>',
+              showConfirmButton: true
+              });
+            inputPassword.value = "";
+            document.getElementsByClassName('py-4')[0].style.display = "none"
+            document.getElementById('mascotVideo').src = WELCOMING_VIDEO;
+            // document.getElementById('invalid').style.display = 'block';
+          }else{
+            document.getElementById('divApprovalRequestInfo').style.display = 'none';
+            document.getElementById('mascotVideo').src = WAVE_VIDEO;
+            document.getElementById('approvalRequestInfo').innerHTML = "";
+            document.getElementById('idStorage').innerHTML = inputPassword.value;
+            inputPassword.value = "";
+            confirm.innerHTML = 'Submit'
+            document.getElementsByClassName('py-4')[0].style.display = 'block'
+            document.getElementById('chatbotFloatBtn').style.display = 'flex'
+            console.log('d values: '+d)
+            // modification codes DEV 4
+            for (var i = 0; i < 18; i++) { //modify the length from 13 to 18, since now we use till col R in google sheet
+                if (i === 10 || i === 11) {
+                    // If id is data10 or data11, use modify logic
+                    console.log('i values: ' + i);
+                    console.log('d values d1: ' + d[i]);
+                    // Separate the first part (name) with the date and description parts
+                    let splitData = d[i].split(' : ');
+                    let formattedData = splitData[0] + '<br>';
+                    if (splitData[1]) {
+                        // Breaking data based on the '-' sign and adding new lines
+                        let parts = splitData[1].split(' - ');
+                        parts.forEach(part => {
+                            // Extract the month from the date part
+                            let datePart = part.split(' ')[0];
+                            let month = parseInt(datePart.split('/')[1]); // Assumes format is DD/MM/YYYY
+                            // Get the current month
+                            let currentMonth = new Date().getMonth() + 1; // JavaScript months are 0-11
+                            // Check if the month matches the current month
+                            if (month === currentMonth) {
+                                formattedData += '<span style="color:red;">' + part + '</span><br>';
+                            } else {
+                                formattedData += part + '<br>';
+                            }
+                        });
+                    }
+                    document.getElementById('data' + i).innerHTML = formattedData;
+                } else {
+                    // If id is not data10 or data11, use a regular loop.
+                    console.log('i values: ' + i);
+                    console.log('d values d1: ' + d[i]);
+                    document.getElementById('data' + i).innerHTML = d[i];
+                }
+            }//modification codes DEV 4 until here
+          }
+      })
+      .withFailureHandler(function(error){
+        confirm.innerHTML = 'Submit';
+        document.getElementsByClassName('py-4')[0].style.display = "none";
+        handleRequestFailure(error);
+      })
+      .getData(inputPassword.value)
+    }
+  };
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('Add your new data here')
+    modal.find('.modal-body input').val(recipient)
+  })
+function clr(){
+  $('.ticTableA tbody').empty();
+  $('.ticTable tbody').empty();
+  $('.ticTable2 tbody').empty();
+  $('.ticTable3 tbody').empty();
+  document.getElementById("cancellationOf").selectedIndex = 0;
+  console.log("data10 after modif: ", document.getElementById('data10').innerHTML)
+  console.log("data11 after modif: ", document.getElementById('data11').innerHTML)
+  document.getElementById('name').value = document.getElementById('data0').innerHTML//.replace('<br>', '');
+  document.getElementById('id').value = document.getElementById('idStorage').innerHTML;
+  document.getElementById('centers').value = document.getElementById('data2').innerHTML;//code to set center value in Permission
+  console.log('data2: ',document.getElementById('data2').innerHTML);
+  document.getElementById('name2').value = document.getElementById('data0').innerHTML//.replace('<br>', '');
+  document.getElementById('id2').value = document.getElementById('idStorage').innerHTML;
+  document.getElementById('centers2').value = document.getElementById('data2').innerHTML;//code to set center value Vacation
+  document.getElementById('name3').value = document.getElementById('data0').innerHTML//.replace('<br>', '');
+  document.getElementById('id3').value = document.getElementById('idStorage').innerHTML;
+  document.getElementById('centers3').value = document.getElementById('data2').innerHTML;//code to set center value in in Sick Leave
+  document.getElementById('name4').value = document.getElementById('data0').innerHTML//.replace('<br>', '');
+  document.getElementById('id4').value = document.getElementById('idStorage').innerHTML;
+  document.getElementById('centers4').value = document.getElementById('data2').innerHTML;//code to set center value in Daily Duty Change
+  document.getElementById('name5').value = document.getElementById('data0').innerHTML//.replace('<br>', '');
+  document.getElementById('id5').value = document.getElementById('idStorage').innerHTML;
+  document.getElementById('centers5').value = document.getElementById('data2').innerHTML;//code to set center value in Weekend Duty Change
+  console.log('centers5: ',document.getElementById('centers5').value);
+}
+function confirmSubmit(){
+  let name = document.getElementById('name');
+  let id = document.getElementById('id');
+  let centers = document.getElementById('centers');
+  let date = document.getElementById('date');
+  let shift = document.getElementById('shift');
+  let period = document.getElementById('period');
+  let obj = {
+    name: name.value,
+    id: id.value,
+    centers: centers.value,
+    date: date.value,
+    shift: shift.value,
+    period: period.value
+  };
+  if(centers.value == "Choose" || date.value == "" || shift.value == "Choose" || period.value == "Choose"){
+    // alert('Please fill all the fields')
+    Swal.fire({
+      title: 'Wrong...',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+      showConfirmButton: true
+      });
+  }else{
+    //trigger loading indicator here
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+    .withSuccessHandler( () => {
+        //fade loading indicator
+        document.getElementById('loadingData').classList.toggle('invisible');
+        //make confirmation checkbox and button disabled again
+        document.getElementById('confirmation1').checked = false;
+        document.getElementById('btn1').disabled = true;
+        centers.selectedIndex = 0;
+        date.value = "";
+        shift.selectedIndex = 0;
+        period.selectedIndex = 0;
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Thank you',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+          // jQuery.noConflict(); //script to make the page reloads to the main back page automatically
+          // $('#exampleModal').modal('hide'); //script to make the page reloads to the main back page automatically
+    } )
+    .withFailureHandler(handleRequestFailure)
+    .saveData(obj)
+  }
+};
+function confirmSubmit2(){
+  let name2 = document.getElementById('name2');
+  let id2 = document.getElementById('id2');
+  let centers2 = document.getElementById('centers2');
+  let date2 = document.getElementById('date2');
+  let question2 = document.getElementById('question2');
+  let numberOf2 = document.getElementById('numberOf2');
+  let question2b = document.getElementById('question2b');
+  let obj2 = {
+    name2: name2.value,
+    id2: id2.value,
+    centers2: centers2.value,
+    date2: date2.value,
+    question2: question2.value,
+    numberOf2: numberOf2.value,
+    question2b: question2b.value
+  };
+  if(centers2.value == "Choose" || date2.value == "" || question2.value == "Choose the answer"|| numberOf2.value == "" || question2b.value == "Choose"){
+    // alert('Please fill all the fields')
+    Swal.fire({
+      title: 'Wrong...',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+      showConfirmButton: true
+      });
+  }else{
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+    .withSuccessHandler( () => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        document.getElementById('confirmation2').checked = false;
+        document.getElementById('btn2').disabled = true;
+        centers2.selectedIndex = 0;
+        date2.value = "";
+        question2.selectedIndex = 0;
+        numberOf2.value = "";
+        question2b.selectedIndex = 0;
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Thank you',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>تسليم المرضية على واتساب الإدارة في حال استلامها من برنامج سالم او سهل</div>',
+          showConfirmButton: true
+          });
+          // jQuery.noConflict(); //script to make the page reloads to the main back page automatically
+          // $('#exampleModal2').modal('hide'); //script to make the page reloads to the main back page automatically
+    } )
+    .withFailureHandler(handleRequestFailure)
+    .saveData2(obj2)
+  }
+};
+// //addtional code to check the dates #1
+// // Function to extract date from data and check current month
+// function extractCurrentMonthDates(data) {
+//     const currentMonth = new Date().getMonth() + 1; // current month (1-12)
+//     const currentYear = new Date().getFullYear();
+//     const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g; // Using regex to match date formats (DD/MM/YYYY)
+//     let match;
+//     let dates = [];
+//     while ((match = dateRegex.exec(data)) !== null) {
+//         const day = match[1];
+//         const month = parseInt(match[2], 10);
+//         const year = parseInt(match[3], 10);
+//         if (month === currentMonth && year === currentYear) {
+//             dates.push(new Date(`${year}-${month}-${day}`));
+//         }
+//     }
+//     return dates;
+// }// #1 until here
+// Function to extract ALL dates from data10 or data11 (no current month restriction)
+function extractAllDates(data) {
+    const dateRegex = /(\d{2})\/(\d{2})\/(\d{4})/g;
+    let match;
+    let dates = [];
+    while ((match = dateRegex.exec(data)) !== null) {
+        const day = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10); // 1-12
+        const year = parseInt(match[3], 10);
+        const dateObj = new Date(year, month - 1, day);
+        // Validate the date so that there are no invalid dates (e.g. 31/04)
+        if (dateObj.getDate() === day && dateObj.getMonth() === month - 1 && dateObj.getFullYear() === year) {
+            dates.push(dateObj);
+        }
+    }
+    return dates;
+}
+// // Helper function: calculate the difference in days between two Dates (in whole days)
+// function dateDiffInDays(date1, date2) {
+//     const d1 = new Date(date1);
+//     const d2 = new Date(date2);
+//     d1.setHours(0, 0, 0, 0);
+//     d2.setHours(0, 0, 0, 0);
+//     return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+// }
+// // Check if there are any conflicts according to the latest rules (a and b only)
+// function hasKhafaraConflict(dateFrom, dateTo, khafaraDates) {
+//     const from = new Date(dateFrom);
+//     const to = new Date(dateTo);
+//     from.setHours(0, 0, 0, 0);
+//     to.setHours(23, 59, 59, 999);
+//     for (const khDate of khafaraDates) {
+//         khDate.setHours(0, 0, 0, 0);
+//         // Rule a: Khafara is in the range from → to
+//         if (khDate >= from && khDate <= to) {
+//             return true;
+//         }
+//         // Rule b: to is 1 day before Khafara → to = khDate - 1
+//         const oneDayBefore = new Date(khDate);
+//         oneDayBefore.setDate(khDate.getDate() - 1);
+//         if (dateDiffInDays(to, oneDayBefore) === 0) {
+//             return true;
+//         }
+//         // Rule b (addition): to is 2 days before Khafara → to = khDate - 2
+//         const twoDaysBefore = new Date(khDate);
+//         twoDaysBefore.setDate(khDate.getDate() - 2);
+//         if (dateDiffInDays(to, twoDaysBefore) === 0) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+//NEW MODIFICATION for Rule B.2 from row 1342 and so on
+// Helper function: calculate the difference in days between two Dates (in whole days)
+function dateDiffInDays(date1, date2) {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+    return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+}
+// Check if there are any conflicts according to the latest rules (a and b only)
+function hasKhafaraConflict(dateFrom, dateTo, khafaraDates) {
+    const from = new Date(dateFrom);
+    const to = new Date(dateTo);
+    from.setHours(0, 0, 0, 0);
+    to.setHours(23, 59, 59, 999);
+    for (const khDate of khafaraDates) {
+        khDate.setHours(0, 0, 0, 0);
+        // Rule a: Khafara is in the range from => to
+        if (khDate >= from && khDate <= to) {
+            return true;
+        }
+        // Rule b: To is exactly 1 day before Khafara => to = khDate - 1
+        // Applies to all Khafara dates regardless of day name
+        const oneDayBefore = new Date(khDate);
+        oneDayBefore.setDate(khDate.getDate() - 1);
+        if (dateDiffInDays(to, oneDayBefore) === 0) {
+            return true;
+        }
+        // Rule b.2 (extended): Only applies when Khafara falls on a Saturday (Weekend Duty).
+        // If To date is exactly 2 days before Saturday Khafara (i.e. To = Thursday),
+        // the submission is blocked to protect the Weekend Duty schedule.
+        // Example: Khafara = Sat 27/6, twoDaysBefore = Thu 25/6, To = Thu 25/6 => BLOCKED
+        const twoDaysBefore = new Date(khDate);
+        twoDaysBefore.setDate(khDate.getDate() - 2);
+        const isKhafaraSaturday = khDate.getDay() === 6; // 0=Sun, 1=Mon, ..., 6=Sat
+        if (isKhafaraSaturday && dateDiffInDays(to, twoDaysBefore) === 0) {
+            return true;
+        }
+    }
+    return false;
+}
+// Updated Submit 3 confirm function
+function confirmSubmit3() {
+    let name3 = document.getElementById('name3');
+    let id3 = document.getElementById('id3');
+    let centers3 = document.getElementById('centers3');
+    let question3 = document.getElementById('question3');
+    let fromDate = document.getElementById('from');
+    let to = document.getElementById('to');
+    let numberOf3 = document.getElementById('numberOf3');
+    let question3b = document.getElementById('question3b');
+    let obj3 = {
+        name3: name3.value,
+        id3: id3.value,
+        centers3: centers3.value,
+        question3: question3.value,
+        fromDate: fromDate.value,
+        to: to.value,
+        numberOf3: numberOf3.value,
+        question3b: question3b.value
+    };
+    // Empty field validation
+    if (centers3.value == "Choose" || question3.value == "Choose" || fromDate.value == "" || to.value == "" || numberOf3.value == "" || question3b.value == "Choose") {
+        Swal.fire({
+            title: 'Wrong...',
+            html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+            showConfirmButton: true
+        });
+        return;
+    }
+    // Take all Khafara & On Call dates (highlight or not, all checked)
+    const khafaraDates10 = extractAllDates(document.getElementById("data10").innerHTML);
+    const khafaraDates11 = extractAllDates(document.getElementById("data11").innerHTML);
+    const allKhafaraDates = khafaraDates10.concat(khafaraDates11);
+    // Check conflicts according to rules a and b (new)
+    if (hasKhafaraConflict(fromDate.value, to.value, allKhafaraDates)) {
+        Swal.fire({
+            title: 'Wrong',
+            html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>You Have Khafara duty on these selected Dates</div>',
+            showConfirmButton: true
+        });
+        return;
+    }
+// If safe from Khafara conflict => continue checking limit & submit
+document.getElementById('loadingData').classList.toggle('invisible');
+google.script.run
+    .withSuccessHandler((result) => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        if (result === "LIMIT_REACHED") {
+            Swal.fire({
+                title: 'Wrong',
+                html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>You have exceeded the limit of 4 days per year</div>',
+                showConfirmButton: true
+            });
+            return; // Stop here, do not reset the form
+        }
+        // If SUCCESS or other type => continue reset form
+        document.getElementById('confirmation3').checked = false;
+        document.getElementById('btn3').disabled = true;
+        centers3.selectedIndex = 0;
+        // question3.selectedIndex = 0;
+        fromDate.value = "";
+        to.value = "";
+        numberOf3.value = "";
+        question3b.selectedIndex = 0;
+        if(question3.value == "Vacation (عرضي)"){
+          Swal.fire({
+              title: 'Thank you',
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>يجب موافقة مشرف الفترة على إجازة العرضي بالتطبيق حتى لا تنحسب انقطاع يوم عن العمل</div>',
+              showConfirmButton: true
+              // timer: 5000
+          });
+          // //Download pdf automatically after submit data
+          // window.location.href = "https://drive.google.com/uc?export=download&id=" + result;
+          var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+          var downloadUrl = isFirefox
+              ? "https://drive.google.com/uc?id=" + result + "&export=download"
+              : "https://drive.google.com/uc?export=download&id=" + result;
+          // var downloadUrl = "https://drive.google.com/uc?export=download&id=" + result;
+          var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+          // if (isIOS) {
+          //   // swal({
+          //   //   title: '📄 PDF Ready',
+          //   //   text: "Tap the button below to download your PDF",
+          //   //   type: "success",
+          //   //   confirmButtonText: "Download PDF",
+          //   //   showConfirmButton: true,
+          //   // }).then(function() {
+          //   //   window.open(downloadUrl, "_blank");
+          //   // });
+          //   swal({
+          //     title: '📄 PDF Ready',
+          //     text: "Tap the button below to download your PDF",
+          //     type: "success",
+          //     confirmButtonText: "Download PDF",
+          //     showConfirmButton: true,
+          //     allowOutsideClick: false,
+          //     allowEscapeKey: false
+          //   }).then(function() {
+          //     window.open(downloadUrl, "_blank");
+          //   });
+          // } else {
+          //   //Download pdf automatically after submit data
+          //   //Change here to modify add tap pdf button on android also
+          //   // window.location.href = downloadUrl//"https://drive.google.com/uc?export=download&id=" + result;
+          //   swal({
+          //     title: '📄 PDF Ready',
+          //     text: "Tap the button below to download your PDF",
+          //     type: "success",
+          //     confirmButtonText: "Download PDF",
+          //     showConfirmButton: true,
+          //     allowOutsideClick: false,
+          //     allowEscapeKey: false
+          //   }).then(function() {
+          //     window.open(downloadUrl, "_blank");
+          //   });
+          // }
+        }else{
+          console.log("result return: " + result)
+          Swal.fire({
+              title: 'Thank you',
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+              showConfirmButton: true
+              // timer: 5000
+          });
+          // //Download pdf automatically after submit data
+          // // window.location.href = "https://drive.google.com/uc?export=download&id=" + result;
+          // var downloadUrl = "https://drive.google.com/uc?export=download&id=" + result;
+          // var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+          // if (isIOS) {
+          //   // swal({
+          //   //   title: '📄 PDF Ready',
+          //   //   text: "Tap the button below to download your PDF",
+          //   //   type: "success",
+          //   //   confirmButtonText: "Download PDF",
+          //   //   showConfirmButton: true,
+          //   // }).then(function() {
+          //   //   window.open(downloadUrl, "_blank");
+          //   // });
+          //   swal({
+          //     title: '📄 PDF Ready',
+          //     text: "Tap the button below to download your PDF",
+          //     type: "success",
+          //     confirmButtonText: "Download PDF",
+          //     showConfirmButton: true,
+          //     allowOutsideClick: false,
+          //     allowEscapeKey: false
+          //   }).then(function() {
+          //     window.open(downloadUrl, "_blank");
+          //   });
+          // } else {
+          //   //Download pdf automatically after submit data
+          //   //Change here to modify add tap pdf button on android also
+          //   // window.location.href = downloadUrl//"https://drive.google.com/uc?export=download&id=" + result;
+          //   swal({
+          //     title: '📄 PDF Ready',
+          //     text: "Tap the button below to download your PDF",
+          //     type: "success",
+          //     confirmButtonText: "Download PDF",
+          //     showConfirmButton: true,
+          //     allowOutsideClick: false,
+          //     allowEscapeKey: false
+          //   }).then(function() {
+          //     window.open(downloadUrl, "_blank");
+          //   });
+          // }
+        }
+        question3.selectedIndex = 0;
+    })
+    .withFailureHandler((error) => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        Swal.fire({
+            title: 'Error',
+            html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Failed to submit data</div>'
+        });
+    })
+    .saveData3(obj3);
+}
+function confirmSubmit4(){
+  let name4 = document.getElementById('name4');
+  let id4 = document.getElementById('id4');
+  let centers4 = document.getElementById('centers4');
+  let fromDate4 = document.getElementById('from4');
+  let to4 = document.getElementById('to4');
+  let nameOfColleague = document.getElementById('nameOfColleague');
+  let obj4 = {
+    name4: name4.value,
+    id4: id4.value,
+    centers4: centers4.value,
+    fromDate4: fromDate4.value,
+    to4: to4.value,
+    nameOfColleague: nameOfColleague.value
+  };
+  if(centers4.value == "Choose" || fromDate4.value == "" || to4.value == "" || nameOfColleague.value == "Choose"){
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Wrong...',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+          showConfirmButton: true
+          });
+  }else{
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+    .withSuccessHandler( () => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        document.getElementById('confirmation4').checked = false;
+        document.getElementById('btn4').disabled = true;
+        centers4.selectedIndex = 0;
+        fromDate4.value = "";
+        to4.value = "";
+        nameOfColleague.selectedIndex = 0;
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Thank you',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+          // jQuery.noConflict(); //script to make the page reloads to the main back page automatically
+          // $('#exampleModal4').modal('hide'); //script to make the page reloads to the main back page automatically
+    } )
+    .withFailureHandler(handleRequestFailure)
+    .saveData4(obj4)
+  }
+};
+function confirmSubmit5(){
+  let name5 = document.getElementById('name5');
+  let id5 = document.getElementById('id5');
+  let centers5 = document.getElementById('centers5');
+  let date5 = document.getElementById('date5');
+  let nameOfColleague5 = document.getElementById('nameOfColleague5');
+  let otherColleague = document.getElementById('otherColleague');
+  let date5b = document.getElementById('date5b');
+  let obj5 = {
+    name5: name5.value,
+    id5: id5.value,
+    centers5: centers5.value,
+    date5: date5.value,
+    nameOfColleague5: nameOfColleague5.value,
+    otherColleague: otherColleague.value,
+    date5b: date5b.value
+  };
+  if(centers5.value == "Choose" || date5.value == "" || nameOfColleague5.value == "Choose" || otherColleague.value == "Choose" || date5b.value == ""){
+    // alert('Please fill all the fields')
+    Swal.fire({
+      title: 'Wrong...',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+      showConfirmButton: true
+      });
+  }else{
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+    .withSuccessHandler( () => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        document.getElementById('confirmation5').checked = false;
+        document.getElementById('btn5').disabled = true;
+        centers5.selectedIndex = 0;
+        date5.value = "";
+        nameOfColleague5.selectedIndex = 0;
+        otherColleague.selectedIndex = 0;
+        date5b.value = "";
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Thank you',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+          // jQuery.noConflict(); //script to make the page reloads to the main back page automatically
+          // $('#exampleModal5').modal('hide'); //script to make the page reloads to the main back page automatically
+    } )
+    .withFailureHandler(handleRequestFailure)
+    .saveData5(obj5)
+  }
+};
+function confirmSubmit6(){
+  let name6 = document.getElementById('name6');
+  let id6 = document.getElementById('id6');
+  let centers6 = document.getElementById('centers6');
+  let cancellationOf = document.getElementById('cancellationOf');
+  let date6 = document.getElementById('date6');
+  let obj6 = {
+    name6: name6.value,
+    id6: id6.value,
+    centers6: centers6.value,
+    cancellationOf: cancellationOf.value,
+    date6: date6.value
+  };
+  if(centers6.value == "Choose" || cancellationOf.value == "Choose" || date6.value == ""){
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Wrong...',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+          showConfirmButton: true
+          });
+  }else{
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+    .withSuccessHandler( () => {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        document.getElementById('confirmation6').checked = false;
+        document.getElementById('btn6').disabled = true;
+        centers6.selectedIndex = 0;
+        date6.value = "";
+        cancellationOf.selectedIndex = 0;
+        date6.value = "";
+        // alert('Please fill all the fields')
+        Swal.fire({
+          title: 'Thank you',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+          // jQuery.noConflict(); //script to make the page reloads to the main back page automatically
+          // $('#exampleModal6').modal('hide'); //script to make the page reloads to the main back page automatically
+    } )
+    .withFailureHandler(handleRequestFailure)
+    .saveData6(obj6)
+  }
+};
+// additional function to activate submit button
+function activateSubmit1(){
+   let confirmation = document.getElementById('confirmation1');
+   let submit = document.getElementById('btn1');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function activateSubmit2(){
+   let confirmation = document.getElementById('confirmation2');
+   let submit = document.getElementById('btn2');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function activateSubmit3(){
+   let confirmation = document.getElementById('confirmation3');
+   let submit = document.getElementById('btn3');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function activateSubmit4(){
+   let confirmation = document.getElementById('confirmation4');
+   let submit = document.getElementById('btn4');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function activateSubmit5(){
+   let confirmation = document.getElementById('confirmation5');
+   let submit = document.getElementById('btn5');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function activateSubmit6(){
+   let confirmation = document.getElementById('confirmation6');
+   let submit = document.getElementById('btn6');
+   submit.disabled = confirmation.checked ? false : true;
+};
+function ctDate(){
+  // console.log('value: '+e.target.value);
+  let dt1 = new Date (document.getElementById('from').value).getTime();
+  let dt2 = new Date (document.getElementById('to').value).getTime();
+  let result = document.getElementById('numberOf3');
+  if( dt1 == "" || dt2 == "" ){
+    result.value = "";
+  }else if(dt2 < dt1){
+    // alert('date 2 can not less than date 1');
+    Swal.fire({
+      title: 'Wrong..',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Date "To" cannot be less than Date "From"</div>',
+      showConfirmButton: true
+      });
+    result.value = "";
+    document.getElementById('from').value = "";
+    document.getElementById('to').value = "";
+  }else if (dt2 >= dt1){
+    result.value = ((dt2 - dt1)/86400000)+1;
+  }
+};
+  function checkApproval() {
+    var id = document.getElementById('data1').innerHTML;
+    document.getElementById('chApp').innerHTML = "Loading..."
+    google.script.run.withSuccessHandler(displayApprovalDetails).withFailureHandler(handleRequestFailure).getApprovalProgress(id);
+  }
+function displayApprovalDetails(data) {
+  var modalBody = document.getElementById('approvalDetails');
+  modalBody.innerHTML = '';
+  var parsedData = JSON.parse(data); // Parse JSON data
+  if (parsedData.length > 0) {
+    var list = document.createElement('ul');
+    list.className = 'list-group';
+    for (var i = 0; i < parsedData.length; i++) {
+      var listItem = document.createElement('li');
+      listItem.className = 'list-group-item';
+      // Select the column index you want to display
+      // var column2Value = parsedData[i][1]; // Second column index
+      var column5Value = parsedData[i][4]; // Fourth column index
+      var column6Value = parsedData[i][5]; // fifth column index
+      var column7Value = parsedData[i][6]; // sixth column index
+      // Create span elements to apply different styles
+      var column5Span = document.createElement('span');
+      column5Span.textContent =  column5Value + ' <---> ';
+      column5Span.style.color = 'black'; // Set the color to black
+      if(column6Value == "Approved by Admin" || column6Value == "Approved by Colleague" || column6Value == "Approved by Team Leader"){
+        var column6Span = document.createElement('span');
+        column6Span.style.color = 'green'; // Set the color to blue
+        column6Span.textContent =  column6Value;
+      }else if(column6Value == "Not Approved by Admin" || column6Value == "Not Approved by Colleague" || column6Value == "Not Approved by Team Leader"){
+        var column6Span = document.createElement('span');
+        column6Span.style.color = 'red'; // Set the color to blue
+        column6Span.textContent =  column6Value;
+      }else if(column6Value == ""){
+        var column6Span = document.createElement('span');
+        column6Span.style.color = 'blue'; // Set the color to blue
+        column6Span.textContent = "Pending";
+      }
+      if(column7Value == "Approved by Admin"){
+        var column7Span = document.createElement('span');
+        column7Span.style.color = 'green'; // Set the color to green
+        column7Span.textContent =  ' <---> '+column7Value;
+      }else if(column7Value == "Not Approved by Admin"){
+        var column7Span = document.createElement('span');
+        column7Span.style.color = 'red'; // Set the color to red
+        column7Span.textContent =  ' <---> '+column7Value;
+      }else if(column7Value == ""){
+        var column7Span = document.createElement('span');
+        column7Span.style.color = "";
+        column7Span.textContent = "";
+      }
+      // Append spans to the list item
+      listItem.appendChild(column5Span);
+      listItem.appendChild(column6Span);
+      listItem.appendChild(column7Span);
+      // Append the list item to the list
+      list.appendChild(listItem);
+    }
+    modalBody.appendChild(list);
+  } else {
+    document.getElementById('chApp').innerHTML = "Check Approval Progress";
+    modalBody.textContent = 'No approval data found for the entered ID.';
+  }
+  document.getElementById('chApp').innerHTML = "Check Approval Progress";
+  $('#approvalModal').modal('show');
+}
+// Function for Weekend Duty Approval Request to get long sentence approval request START here
+function checkApprovalRequest(){
+  var name = document.getElementById('data0').innerHTML;
+  document.getElementById('loadingData').classList.toggle('invisible');
+  google.script.run
+  .withSuccessHandler(d => {
+    console.log("d content: "+d)
+    if(d == false){
+      document.getElementById('loadingData').classList.toggle('invisible');
+      document.getElementById('divApprovalRequestInfo').style.display = 'block';
+      document.getElementById('approvalRequestInfo').innerHTML = 'There no request yet';
+      document.getElementById('yes').disabled = true;
+      document.getElementById('no').disabled = true;
+    }else{
+      document.getElementById('loadingData').classList.toggle('invisible');
+      document.getElementById('divApprovalRequestInfo').style.display = 'block';
+      document.getElementById('approvalRequestInfo').innerHTML = d[0];
+      document.getElementById('btnIdx').innerHTML = d[1];
+      document.getElementById('yes').disabled = false;
+      document.getElementById('no').disabled = false;
+    }
+  })
+  .withFailureHandler(handleRequestFailure)
+  .checkApprovalInformation(name);
+}
+// Function for Weekend Duty Approval Request to get long sentence approval request END here
+// Function to give "Approved" START here
+function yesApproved(){
+  document.getElementById('loadingData').classList.toggle('invisible');
+  google.script.run
+  .withSuccessHandler( () => {
+    document.getElementById('loadingData').classList.toggle('invisible');
+    document.getElementById('divApprovalRequestInfo').style.display = 'none';
+    document.getElementById('approvalRequestInfo').innerHTML = "";
+    Swal.fire({
+          title: 'Approved Success',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+  })
+  .withFailureHandler(handleRequestFailure)
+  .approvedApproval(document.getElementById('data0').innerHTML);
+}
+// Function to give "Approved" END here
+// Function to give "Not Approved" START here
+function noApproved(){
+  document.getElementById('loadingData').classList.toggle('invisible');
+  google.script.run
+  .withSuccessHandler( () => {
+    document.getElementById('loadingData').classList.toggle('invisible');
+    document.getElementById('divApprovalRequestInfo').style.display = 'none';
+    document.getElementById('approvalRequestInfo').innerHTML = "";
+    //alert('Rejected Approval Success')
+    Swal.fire({
+          title: 'Rejected Approval Success',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+          showConfirmButton: true
+          });
+  })
+  .withFailureHandler(handleRequestFailure)
+  .approvedApprovalNo(document.getElementById('data0').innerHTML);
+}
+// Function to give "Not Approved" END here
+//Function for tick table START
+function callTable(){
+  let selectCategory = document.getElementById("cancellationOf");
+  let category = selectCategory.value;
+  console.log("Chosen Category: " + category);
+  let userLoginID = document.getElementById("idStorage").innerHTML;
+  checkLogin(category, userLoginID);
+}
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+//Change color function
+function getId(element) {
+  let cb = document.getElementsByName("cb")[element.parentNode.parentNode.rowIndex-1];
+  // alert(cb.value+" "+element.parentNode.parentNode.rowIndex)
+  //ADD here
+  let selectCategory = document.getElementById("cancellationOf");
+  let category = selectCategory.value;
+  console.log("Chosen Category: " + category);
+  let userLoginID = document.getElementById("idStorage").innerHTML;
+  // checkLogin(category, userLoginID);
+  //Conditonal Function Based On Category Start Here
+  if(category == "Permission"){
+    let table = document.getElementById("mainTable");
+    if(cb.checked){
+        let cellText = table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent.trim();
+        if (cellText === "Approved by Team Leader" || cellText === "Approved by Admin") {
+            Swal.fire({
+              title: "",
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + TL_VIDEO + '"></video><div>Return To Team Leader or Admin...!</div>',
+              showConfirmButton: true
+            });
+            cb.checked = false;
+            return; // Stop further execution
+        }else{
+            document.getElementById('loadingData').classList.toggle('invisible');
+            let colorIfApproved = 'orange';
+            table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfApproved;
+            google.script.run
+            .withSuccessHandler( (d)=> {
+              document.getElementById('loadingData').classList.toggle('invisible');
+              Swal.fire({
+                title: 'Great',
+                html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>' + d + '</div>',
+                showConfirmButton: true,
+              });
+              if (d == "Data Deleted") {
+                console.log("flow deleted in permission")
+                let colorIfNo = cellText === "Approved by Team Leader" || cellText === "Approved by Admin" ? "#d9ead3" : cellText === "Not Approved by Team Leader" || cellText === "Not Approved by Admin" ? "#ffcccc" : "white";
+                table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfNo;
+                cb.checked = false;
+              }else{
+                cb.checked = false;
+              };
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent = 'Approved by Team Leader';
+              } )
+            .withFailureHandler(handleRequestFailure)
+            //change this code below to targeted column 1 (index 0) in html that we use to maching with column 0 in spreadsheet
+            .setStatus(
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,"Not Approved by Team Leader"
+              category, userLoginID,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[0].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[1].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[2].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[3].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[4].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[5].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[6].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[8].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent,
+            )
+        }
+    }
+  }else if(category == "SickLeave"){
+    let table = document.getElementById("mainTable2");
+    if(cb.checked){
+        let cellText = table.rows[element.parentNode.parentNode.rowIndex].cells[10].textContent.trim();
+        if (cellText === "Approved by Team Leader" || cellText === "Approved by Admin") {
+            Swal.fire({
+              title: "",
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + TL_VIDEO + '"></video><div>Return To Team Leader or Admin...!</div>',
+              showConfirmButton: true
+            });
+            cb.checked = false;
+            return; // Stop further execution
+        }else{
+            document.getElementById('loadingData').classList.toggle('invisible');
+            let colorIfApproved = 'orange';
+            table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[12].style.backgroundColor = colorIfApproved;
+            google.script.run
+            .withSuccessHandler( (d)=> {
+              document.getElementById('loadingData').classList.toggle('invisible');
+              cb.checked = false;
+              Swal.fire({
+                title: 'Great',
+                html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>' + d + '</div>',
+                showConfirmButton: true,
+              });
+              if (d == "Data Deleted") {
+                console.log("flow deleted in sickleave")
+                let colorIfNo = cellText === "Approved by Team Leader" || cellText === "Approved by Admin" ? "#d9ead3" : cellText === "Not Approved by Team Leader" || cellText === "Not Approved by Admin" ? "#ffcccc" : "white";
+                table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[12].style.backgroundColor = colorIfNo;
+                cb.checked = false;
+              }else{
+                cb.checked = false;
+              };
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent = 'Approved by Team Leader';
+              } )
+            .withFailureHandler(handleRequestFailure)
+            //change this code below to targeted column 1 (index 0) in html that we use to maching with column 0 in spreadsheet
+            .setStatus2(
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,"Not Approved by Team Leader"
+              category, userLoginID,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[0].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[1].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[2].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[3].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[4].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[5].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[6].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[8].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[10].textContent
+            )
+        }
+    }
+  }else if(category == "Vacation"){
+    let table = document.getElementById("mainTable3");
+    if(cb.checked){
+        let cellText = table.rows[element.parentNode.parentNode.rowIndex].cells[11].textContent.trim();
+        let cellText2 = table.rows[element.parentNode.parentNode.rowIndex].cells[12].textContent.trim();
+        if (cellText === "Approved by Team Leader" || cellText2 === "Approved by Admin") {
+            Swal.fire({
+              title: "",
+              html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + TL_VIDEO + '"></video><div>Return To Team Leader or Admin...!</div>',
+              showConfirmButton: true
+            });
+            cb.checked = false;
+            return; // Stop further execution
+        }else{
+            document.getElementById('loadingData').classList.toggle('invisible');
+            let colorIfApproved = 'orange';
+            table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[12].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[13].style.backgroundColor = colorIfApproved;
+            table.rows[element.parentNode.parentNode.rowIndex].cells[14].style.backgroundColor = colorIfApproved;
+            google.script.run
+            .withSuccessHandler( (d)=> {
+              document.getElementById('loadingData').classList.toggle('invisible');
+              Swal.fire({
+                title: 'Great',
+                html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>' + d + '</div>',
+                showConfirmButton: true,
+              });
+              if (d == "Data Deleted") {
+                console.log("flow deleted in sickleave")
+                let colorIfNo = cellText === "Approved by Team Leader" || cellText === "Approved by Admin" ? "#d9ead3" : cellText === "Not Approved by Team Leader" || cellText === "Not Approved by Admin" ? "#ffcccc" : "white";
+                table.rows[element.parentNode.parentNode.rowIndex].cells[0].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[1].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[2].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[3].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[4].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[5].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[6].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[7].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[8].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[9].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[10].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[11].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[12].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[13].style.backgroundColor = colorIfNo;
+                table.rows[element.parentNode.parentNode.rowIndex].cells[14].style.backgroundColor = colorIfNo;
+                cb.checked = false;
+              }else{
+                cb.checked = false;
+              };
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent = 'Approved by Team Leader';
+              } )
+            .withFailureHandler(handleRequestFailure)
+            //change this code below to targeted column 1 (index 0) in html that we use to maching with column 0 in spreadsheet
+            .setStatus3(
+              // table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,"Not Approved by Team Leader"
+              category, userLoginID,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[0].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[1].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[2].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[3].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[4].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[5].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[6].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[7].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[8].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[9].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[10].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[11].textContent,
+              table.rows[element.parentNode.parentNode.rowIndex].cells[12].textContent
+            )
+        }
+    }
+  }
+  //Conditonal Function Based On Category End Here
+}
+function checkLogin(category,userLoginID){
+   document.getElementById('loadingData').classList.toggle('invisible');
+   const input1 = document.getElementById('input');
+   const input2 = document.getElementById('input2');
+   const objInput = {
+                      input1: category,
+                      input2: userLoginID
+                    };
+      google.script.run
+      .withSuccessHandler( function(dataArray) { if( dataArray && dataArray !== undefined && dataArray.length != 0 ){
+      // Make conditional based on chosen category start here
+      if(category == "Permission"){
+        var result = "<table class='table table-bordered colorchange ticTable' id='mainTable'>"+
+                    "<thead style='white-space: nowrap'>"+
+                      "<tr style='white-space: nowrap'>"+ //Change table headings to match with your Google Sheet
+                        //Set each column in HTML CRUD table here
+                        "<th scope='col'>Time Stamp</th>"+
+                        "<th scope='col'>Name</th>"+
+                        "<th scope='col'>Reports</th>"+
+                        "<th scope='col'>TML Approval Status</th>"+
+                        "<th scope='col'>Actions Btn</th>"+
+                        //Set each column in HTML CRUD table until here
+                      "</tr>"+
+                    "</thead>";
+        for(var i=0; i<dataArray.length; i++) {
+            console.log("dataArray[i][10]: " + dataArray[i][10])
+            //ADD here for conditional formatting
+            var status = dataArray[i][9]; // Retrieve the value from the "Status" column
+            // Define color based on status
+            var rowColor = '';
+            if (dataArray[i][10] === 'Submitted') {
+                rowColor = 'style="background-color: orange;"'; // orange for "Submitted"
+            } else if (status === 'Approved by Team Leader') {
+                rowColor = 'style="background-color: #d9ead3;"'; // Light green for "Approved"
+            } else if (status === 'Not Approved by Team Leader') {
+                rowColor = 'style="background-color: #ffcccc;"'; // Red for "Not Approved"
+            }
+            result += '<tr ' + rowColor + '>';
+            for (var j = 0; j < dataArray[i].length; j++) {
+                result += "<td>" + dataArray[i][j] + "</td>";
+            }
+            result += '<td><input type="checkbox" onchange="getId(this)" name="cb" value="xxx"/>&nbsp;&nbsp;</td>';
+            result += "</tr>";
+            //End conditional formatting
+        }
+        result += "</table>";
+        var div = document.getElementById('dataTable');
+        div.innerHTML = result;
+        document.getElementById('loadingData').classList.toggle('invisible');
+      }else if(category == "SickLeave"){
+        var result = "<table class='table table-bordered colorchange ticTable2' id='mainTable2'>"+
+                    "<thead style='white-space: nowrap'>"+
+                      "<tr style='white-space: nowrap'>"+ //Change table headings to match with your Google Sheet
+                        //Set each column in HTML CRUD table here
+                        "<th scope='col'>Time Stamp</th>"+
+                        "<th scope='col'>Name</th>"+
+                        "<th scope='col'>Reports</th>"+
+                        "<th scope='col'>TML Approval Status</th>"+
+                        "<th scope='col'>Actions Btn</th>"+
+                        //Set each column in HTML CRUD table until here
+                      "</tr>"+
+                    "</thead>";
+        for(var i=0; i<dataArray.length; i++) {
+            //ADD here for conditional formatting
+            var status = dataArray[i][10]; // Retrieve the value from the "Status" column
+            // Define color based on status
+            var rowColor = '';
+            if (dataArray[i][11] === 'Submitted') {
+                rowColor = 'style="background-color: orange;"'; // orange for "Submitted"
+            } else if (status === 'Approved by Admin') {
+                rowColor = 'style="background-color: #d9ead3;"'; // Light green for "Approved"
+            } else if (status === 'Not Approved by Admin') {
+                rowColor = 'style="background-color: #ffcccc;"'; // Red for "Not Approved"
+            }
+            result += '<tr ' + rowColor + '>';
+            for (var j = 0; j < dataArray[i].length; j++) {
+                result += "<td>" + dataArray[i][j] + "</td>";
+            }
+            result += '<td><input type="checkbox" onchange="getId(this)" name="cb" value="xxx"/>&nbsp;&nbsp;</td>';
+            result += "</tr>";
+            //End conditional formatting
+        }
+        result += "</table>";
+        var div = document.getElementById('dataTable');
+        div.innerHTML = result;
+        document.getElementById('loadingData').classList.toggle('invisible');
+      }else if(category == "Vacation"){
+        var result = "<table class='table table-bordered colorchange ticTable3' id='mainTable3'>"+
+                    "<thead style='white-space: nowrap'>"+
+                      "<tr style='white-space: nowrap'>"+ //Change table headings to match with your Google Sheet
+                        //Set each column in HTML CRUD table here
+                        "<th scope='col'>Time Stamp</th>"+
+                        "<th scope='col'>Name</th>"+
+                        //"<th scope='col'>ID</th>"+
+                        //"<th scope='col'>Center</th>"+
+                        //"<th scope='col'>Date</th>"+
+                        //"<th scope='col'>Shift</th>"+
+                        //"<th scope='col'>Period</th>"+
+                        //"<th scope='col'>Code</th>"+
+                        "<th scope='col'>Reports</th>"+
+                        "<th scope='col'>TML Approval Status</th>"+
+                        "<th scope='col'>Admin Approval Status</th>"+
+                        "<th scope='col'>Actions Btn</th>"+
+                        //Set each column in HTML CRUD table until here
+                      "</tr>"+
+                    "</thead>";
+        for(var i=0; i<dataArray.length; i++) {
+            //ADD here for conditional formatting
+            var status = dataArray[i][12]; // Retrieve the value from the "Status" column
+            // Define color based on status
+            var rowColor = '';
+            if (dataArray[i][13] === 'Submitted') {
+                rowColor = 'style="background-color: orange;"'; // orange for "Submitted"
+            } else if (status === 'Approved by Admin') {
+                rowColor = 'style="background-color: #d9ead3;"'; // Light green for "Approved"
+            } else if (status === 'Not Approved by Admin') {
+                rowColor = 'style="background-color: #ffcccc;"'; // Red for "Not Approved"
+            }
+            result += '<tr ' + rowColor + '>';
+            for (var j = 0; j < dataArray[i].length; j++) {
+                result += "<td>" + dataArray[i][j] + "</td>";
+            }
+            result += '<td><input type="checkbox" onchange="getId(this)" name="cb" value="xxx"/>&nbsp;&nbsp;</td>';
+            result += "</tr>";
+            //End conditional formatting
+        }
+        result += "</table>";
+        var div = document.getElementById('dataTable');
+        div.innerHTML = result;
+        document.getElementById('loadingData').classList.toggle('invisible');
+      }
+     // Make conditional based on chosen category end here
+    }else{
+        document.getElementById('loadingData').classList.toggle('invisible');
+        Swal.fire({title: "", text: "No Data Found...!", icon: "error"});
+      }
+      })
+      .withFailureHandler(handleRequestFailure)
+      .getTableData(objInput)
+}
+//Function for tick table End
+//Function to check and display Vacations PDF
+function checkVacationsPdf() {
+  var userId = document.getElementById('idStorage').innerHTML.trim();
+  if (!userId) {
+    Swal.fire({
+      title: 'Error',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>User ID not found</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+  // Show loading
+  document.getElementById('loadingData').classList.toggle('invisible');
+  google.script.run
+    .withSuccessHandler(function(result) {
+      document.getElementById('loadingData').classList.toggle('invisible');
+      if (!result || result.length === 0) {
+        Swal.fire({
+          title: 'PDF is empty',
+          text: "No requests with 'Approved by Admin' found",
+          icon: "info",
+          showConfirmButton: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        });
+        return;
+      }
+      // Build table rows
+      var rows = result.map(function(item) {
+        var pdfId = item.pdfUrl.match(/\/d\/(.*?)\//);
+        pdfId = pdfId ? pdfId[1] : null;
+        var btnHtml = pdfId
+          ? '<button class="btn-download-pdf" data-pdf-id="' + pdfId + '" ' +
+            'style="background:none; border:none; color:blue; cursor:pointer; text-decoration:underline;">' +
+            'Vacations PDF</button>'
+          : 'N/A';
+        return '<tr>' +
+          '<td style="padding:8px; border:1px solid #ddd; font-size:13px;">' + item.colK + '</td>' +
+          '<td style="padding:8px; border:1px solid #ddd; text-align:center;">' + btnHtml + '</td>' +
+          '</tr>';
+      }).join('');
+      var tableHtml =
+        '<div style="overflow-x:auto;">' +
+          '<table style="width:100%; border-collapse:collapse;">' +
+            '<thead>' +
+              '<tr style="background:#f5f5f5;">' +
+                '<th style="padding:8px; border:1px solid #ddd;">Details</th>' +
+                '<th style="padding:8px; border:1px solid #ddd;">PDF</th>' +
+              '</tr>' +
+            '</thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
+        '</div>';
+      Swal.fire({
+        title: 'Vacations PDFs',
+        html: tableHtml,
+        confirmButtonText: "Close",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        onOpen: function() {
+          document.querySelectorAll('.btn-download-pdf').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var pdfId = this.getAttribute('data-pdf-id');
+              var downloadUrl = "https://drive.google.com/uc?export=download&id=" + pdfId;
+              window.open(downloadUrl, "_blank");
+            });
+          });
+        }
+      });
+    })
+    .withFailureHandler(function(error) {
+      document.getElementById('loadingData').classList.toggle('invisible');
+      Swal.fire({
+        title: 'Error',
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Failed to fetch data</div>'
+      });
+    })
+    .getVacationsPdf(userId);
+}
+function downloadVacationPdf(pdfId) {
+  var downloadUrl = "https://drive.google.com/uc?export=download&id=" + pdfId;
+  window.open(downloadUrl, "_blank");
+}
+
+function prepSickLeaveUpload() {
+  document.getElementById('name7').value = document.getElementById('data0').innerHTML;
+  document.getElementById('sickLeaveCode7').value = '';
+  var select = document.getElementById('sickLeaveSummary7');
+  select.innerHTML = '<option disabled selected>Loading...</option>';
+  google.script.run
+    .withSuccessHandler(function(list) {
+      select.innerHTML = '<option disabled selected>Choose</option>';
+      (list || []).forEach(function(item) {
+        var opt = document.createElement('option');
+        opt.value = item.summary;
+        opt.innerText = item.summary;
+        opt.setAttribute('data-code', item.code);
+        select.appendChild(opt);
+      });
+    })
+    .withFailureHandler(handleRequestFailure)
+    .getSickLeaveSummaries(document.getElementById('idStorage').innerHTML);
+}
+
+function fillSickLeaveCode() {
+  var select = document.getElementById('sickLeaveSummary7');
+  var opt = select.options[select.selectedIndex];
+  document.getElementById('sickLeaveCode7').value = opt ? (opt.getAttribute('data-code') || '') : '';
+}
+
+function submitSickLeaveUpload() {
+  var summary = document.getElementById('sickLeaveSummary7').value;
+  var code = document.getElementById('sickLeaveCode7').value;
+  var fileInput = document.getElementById('pdfFile7');
+  var file = fileInput.files[0];
+
+  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a sick leave and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  var btn7 = document.getElementById('btn7');
+  btn7.disabled = true; // guards against duplicate rows from a double-click while the upload is in flight
+
+  var reader = new FileReader();
+  reader.onload = function() {
+    var base64 = reader.result.split(',')[1];
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+      .withSuccessHandler(function() {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn7.disabled = false;
+        fileInput.value = '';
+        document.getElementById('sickLeaveSummary7').selectedIndex = 0;
+        document.getElementById('sickLeaveCode7').value = '';
+        $('#exampleModal7').modal('hide');
+        Swal.fire({
+          title: '',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>PDF uploaded successfully</div>',
+          showConfirmButton: true
+        });
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn7.disabled = false;
+        handleRequestFailure(err);
+      })
+      .uploadSickLeavePdf(base64, file.name, document.getElementById('name7').value, document.getElementById('idStorage').innerHTML, summary, code);
+  };
+  reader.readAsDataURL(file);
+}
+
+function routeUploadChoice() {
+  var choice = document.getElementById('uploadChoice8').value;
+  $('#exampleModal8').modal('hide');
+  if (choice === 'sick') {
+    prepSickLeaveUpload();
+    $('#exampleModal7').modal('show');
+  } else if (choice === 'vacation') {
+    prepVacationUpload();
+    $('#exampleModal9').modal('show');
+  } else if (choice === 'eqrarawdah') {
+    prepEqrarAwdahUpload();
+    $('#exampleModal10').modal('show');
+  }
+}
+
+function prepVacationUpload() {
+  document.getElementById('name9').value = document.getElementById('data0').innerHTML;
+  document.getElementById('vacationCode9').value = '';
+  var select = document.getElementById('vacationSummary9');
+  select.innerHTML = '<option disabled selected>Loading...</option>';
+  google.script.run
+    .withSuccessHandler(function(list) {
+      select.innerHTML = '<option disabled selected>Choose</option>';
+      (list || []).forEach(function(item) {
+        var opt = document.createElement('option');
+        opt.value = item.summary;
+        opt.innerText = item.summary;
+        opt.setAttribute('data-code', item.code);
+        select.appendChild(opt);
+      });
+    })
+    .withFailureHandler(handleRequestFailure)
+    .getVacationUploadSummaries(document.getElementById('idStorage').innerHTML);
+}
+
+function fillVacationCode() {
+  var select = document.getElementById('vacationSummary9');
+  var opt = select.options[select.selectedIndex];
+  document.getElementById('vacationCode9').value = opt ? (opt.getAttribute('data-code') || '') : '';
+}
+
+function submitVacationUpload() {
+  var summary = document.getElementById('vacationSummary9').value;
+  var code = document.getElementById('vacationCode9').value;
+  var fileInput = document.getElementById('pdfFile9');
+  var file = fileInput.files[0];
+
+  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a vacation and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  var btn9 = document.getElementById('btn9');
+  btn9.disabled = true; // guards against duplicate rows from a double-click while the upload is in flight
+
+  var reader = new FileReader();
+  reader.onload = function() {
+    var base64 = reader.result.split(',')[1];
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+      .withSuccessHandler(function() {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn9.disabled = false;
+        fileInput.value = '';
+        document.getElementById('vacationSummary9').selectedIndex = 0;
+        document.getElementById('vacationCode9').value = '';
+        $('#exampleModal9').modal('hide');
+        Swal.fire({
+          title: '',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>PDF uploaded successfully</div>',
+          showConfirmButton: true
+        });
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn9.disabled = false;
+        handleRequestFailure(err);
+      })
+      .uploadVacationPdf(base64, file.name, document.getElementById('name9').value, document.getElementById('idStorage').innerHTML, summary, code);
+  };
+  reader.readAsDataURL(file);
+}
+
+function prepEqrarAwdahUpload() {
+  document.getElementById('name10').value = document.getElementById('data0').innerHTML;
+  document.getElementById('eqrarawdahCode10').value = '';
+  var select = document.getElementById('eqrarawdahSummary10');
+  select.innerHTML = '<option disabled selected>Loading...</option>';
+  google.script.run
+    .withSuccessHandler(function(list) {
+      select.innerHTML = '<option disabled selected>Choose</option>';
+      (list || []).forEach(function(item) {
+        var opt = document.createElement('option');
+        opt.value = item.summary;
+        opt.innerText = item.summary;
+        opt.setAttribute('data-code', item.code);
+        select.appendChild(opt);
+      });
+    })
+    .withFailureHandler(handleRequestFailure)
+    .getVacationUploadSummaries(document.getElementById('idStorage').innerHTML);
+}
+
+function fillEqrarAwdahCode() {
+  var select = document.getElementById('eqrarawdahSummary10');
+  var opt = select.options[select.selectedIndex];
+  document.getElementById('eqrarawdahCode10').value = opt ? (opt.getAttribute('data-code') || '') : '';
+}
+
+function submitEqrarAwdahUpload() {
+  var summary = document.getElementById('eqrarawdahSummary10').value;
+  var code = document.getElementById('eqrarawdahCode10').value;
+  var fileInput = document.getElementById('pdfFile10');
+  var file = fileInput.files[0];
+
+  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a vacation and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  var btn10 = document.getElementById('btn10');
+  btn10.disabled = true; // guards against duplicate rows from a double-click while the upload is in flight
+
+  var reader10 = new FileReader();
+  reader10.onload = function() {
+    var base64 = reader10.result.split(',')[1];
+    document.getElementById('loadingData').classList.toggle('invisible');
+    google.script.run
+      .withSuccessHandler(function() {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn10.disabled = false;
+        fileInput.value = '';
+        document.getElementById('eqrarawdahSummary10').selectedIndex = 0;
+        document.getElementById('eqrarawdahCode10').value = '';
+        $('#exampleModal10').modal('hide');
+        Swal.fire({
+          title: '',
+          html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>PDF uploaded successfully</div>',
+          showConfirmButton: true
+        });
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('loadingData').classList.toggle('invisible');
+        btn10.disabled = false;
+        handleRequestFailure(err);
+      })
+      .uploadEqrarAwdahPdf(base64, file.name, document.getElementById('name10').value, document.getElementById('idStorage').innerHTML, summary, code);
+  };
+  reader10.readAsDataURL(file);
+}
+</script>
+<script>
+    google.script.run.withSuccessHandler(monthNameYear => {
+      document.getElementById("monthNameYear").textContent = monthNameYear;
+    }).withFailureHandler(function(error){
+      console.log('getMonthNameAndYear failed: ' + (error && error.message ? error.message : error));
+    }).getMonthNameAndYear();
+  </script>
+  </body>
+</html
