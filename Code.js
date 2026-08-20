@@ -1336,13 +1336,30 @@ function getSickLeaveSummaries(userId) {
 
 // Uploads a sick leave PDF to Drive and logs it to the external "UploadedData" sheet,
 // same cross-spreadsheet pattern as the chatbot's logChatToExternalSheet().
+//
+// Re-uploading with a code already present in destSheet's Code column (E) overwrites
+// that row instead of appending a duplicate.
+function upsertUploadRow(destSheet, code, rowValues) {
+  var lastRow = destSheet.getLastRow();
+  if (lastRow >= 2) {
+    var codes = destSheet.getRange(2, 5, lastRow - 1, 1).getValues(); // Code column
+    for (var i = 0; i < codes.length; i++) {
+      if (codes[i][0] && codes[i][0].toString().trim() === code.toString().trim()) {
+        destSheet.getRange(i + 2, 1, 1, rowValues.length).setValues([rowValues]);
+        return;
+      }
+    }
+  }
+  destSheet.appendRow(rowValues);
+}
+
 function uploadSickLeavePdf(base64Data, fileName, name, id, summary, code) {
   var blob = Utilities.newBlob(Utilities.base64Decode(base64Data), 'application/pdf', fileName);
   var file = DriveApp.getFolderById('1hmDFt8N5pHcN_12DYjJjc6iSRe03HIDT').createFile(blob);
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
   var destSheet = SpreadsheetApp.openById('1Q0E90y1l90KXye8vt0EZjr2hEPeKx-pRdb2gJlXspPU').getSheetByName('UploadedData');
-  destSheet.appendRow([new Date(), name, id, summary, code, file.getUrl()]);
+  upsertUploadRow(destSheet, code, [new Date(), name, id, summary, code, file.getUrl()]);
 
   return file.getUrl();
 }
@@ -1376,7 +1393,7 @@ function uploadVacationPdf(base64Data, fileName, name, id, summary, code) {
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
   var destSheet = SpreadsheetApp.openById('1Q0E90y1l90KXye8vt0EZjr2hEPeKx-pRdb2gJlXspPU').getSheetByName('UploadedVacations');
-  destSheet.appendRow([new Date(), name, id, summary, code, file.getUrl()]);
+  upsertUploadRow(destSheet, code, [new Date(), name, id, summary, code, file.getUrl()]);
 
   return file.getUrl();
 }
@@ -1389,7 +1406,7 @@ function uploadEqrarAwdahPdf(base64Data, fileName, name, id, summary, code) {
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
   var destSheet = SpreadsheetApp.openById('1Q0E90y1l90KXye8vt0EZjr2hEPeKx-pRdb2gJlXspPU').getSheetByName('UploadedEqrarawdah');
-  destSheet.appendRow([new Date(), name, id, summary, code, file.getUrl()]);
+  upsertUploadRow(destSheet, code, [new Date(), name, id, summary, code, file.getUrl()]);
 
   return file.getUrl();
 }
