@@ -172,3 +172,101 @@ All in Code.js:
 
 **Claude** (02:26 UTC)
 This entry, plus a memory update — committed and pushed.
+
+---
+
+**User** (2026-08-26, 03:00 UTC)
+> Claude, tell me the last modification we did on this project in simple sumrize way
+
+**Claude** (03:00 UTC)
+Summarized the latest commit: fixing re-upload so it overwrites the existing row by code instead of duplicating (`73e8975`/`7b3ee3a`).
+
+---
+
+**User** (03:01 UTC)
+> point for me the url of sheet that submit the uploads and thier tabs
+
+**Claude** (03:01 UTC)
+Gave the destination spreadsheet URL (`1Q0E90y1l90KXye8vt0EZjr2hEPeKx-pRdb2gJlXspPU`) and the three tabs: `UploadedData` (SickLeave), `UploadedVacations` (Vacation), `UploadedEqrarawdah` (اقرار عودة).
+
+---
+
+**User** (03:03 UTC)
+> see sometimes when i submit i found out in 3 tabs in col "Summary Dropdown" i got a "Loading..." submission. can you explain for me why and how we fix this issue ?
+
+**Claude** (03:03–03:08 UTC)
+Ran systematic debugging. Root cause: the dropdown shows a disabled `"Loading..."` placeholder while `google.script.run` fetches the real list asynchronously ([index.html:2462](index.html#L2462) etc.), but the submit guard only rejected the literal value `'Choose'` — not `'Loading...'`. Submitting during that async window let the placeholder text (and an empty code) get written straight into the sheet.
+
+**Fix:** in all three `submit*Upload()` functions, the guard now checks whether the *selected option itself* is `disabled` instead of matching specific placeholder text — this single check blocks both `"Loading..."` and `"Choose"`.
+
+---
+
+**User** (03:09 UTC)
+> do you mean it happend becoz i submit before i select my dropdown element ? if that so how about me make all fields to be required and cannot submit until we choose element from dropdown and we upload the file ?
+
+**Claude** (03:09–03:11 UTC)
+Clarified: not skipping the dropdown, but submitting *while it was still loading*. Also noted the Submit buttons are plain `type="button"` outside any `<form>`, so HTML5 `required` would be silently ignored — the JS guard is the real fix. Added a second layer anyway: the Submit button (`btn7`/`btn9`/`btn10`) is now disabled the instant each modal opens and only re-enabled once the real options (or a failure) come back, so there's nothing clickable during the loading window.
+
+---
+
+**User** (03:12 UTC)
+> yes
+
+**Claude** (03:12 UTC)
+Pushed and deployed (`@47`), then verified live by fetching the production `/exec` URL and confirming `selectedOpt7/9/10` and `btn7/9/10.disabled = true` are present in the served HTML.
+
+---
+
+**User** (03:13 UTC)
+> Can you show me excatly where in code.gs and index,htmal rows numbers the changes occured in this google appscrpit ?
+
+**Claude** (03:13 UTC)
+Confirmed via `git diff` that Code.js was untouched this round; listed the exact index.html line ranges for the button-disable, re-enable, and guard-check edits in all three upload functions.
+
+---
+
+**User** (03:14 UTC)
+> Perfectly done claude, now let do another modification
+
+**Claude** (03:14 UTC)
+Asked what the change should be.
+
+**User** (03:15 UTC)
+> can you tell me the avarage size of a normal pdf ?
+
+**Claude** (03:15 UTC)
+~200KB–3MB for a typical scanned document; suggested a 5–10MB cap if heading toward a size-limit feature.
+
+---
+
+**User** (03:17 UTC)
+> i want you before that to look at the uplaod function, does only allowed pdfs type as i want or it can also accepts pics with high sizes in both server side and clint side ?
+
+**Claude** (03:17–03:20 UTC)
+Inspected both layers. Client-side `file.type !== 'application/pdf'` is extension-based, not content-based — a renamed image passes. Server-side (`uploadSickLeavePdf`/`uploadVacationPdf`/`uploadEqrarAwdahPdf` in Code.js) does zero validation and even force-labels the Drive blob as `'application/pdf'` regardless of actual content. No size limit existed anywhere.
+
+---
+
+**User** (03:22 UTC)
+> i want the web app to prevent any types excpet an orginal PDF type that is with lowest size say 200-500 k. now do these (1) and (2) met my requirments ?
+
+**Claude** (03:22 UTC)
+Pointed out the mismatch: the proposed size check was a *maximum* cap, not the *minimum* floor being asked for. Asked for clarification via two questions (min-only vs. min+max, and exact floor value).
+
+**User** answered: reject files over **500KB** (max), reject files under **1KB** (min).
+
+**Claude** (03:30–03:44 UTC)
+Implemented both requirements end-to-end:
+- Real-PDF check via `%PDF-` magic-byte signature (`isRealPdfBase64()` in index.html, `assertValidPdfBytes()` in Code.js) instead of trusting file extension/MIME type.
+- Size window enforced at **1KB–500KB**, both client-side (instant, specific error) and server-side (the actual trust boundary, can't be bypassed).
+- Wrote a one-off Node self-check (`test_pdf_validation.js`, not committed — scratchpad only) covering valid/too-small/too-large/wrong-header/boundary cases; all passed.
+
+Pushed and deployed (`@48`), verified live by confirming `isRealPdfBase64`, `MIN_PDF_BYTES`, `MAX_PDF_BYTES`, and the new error strings are present in the served HTML.
+
+---
+
+**User** (03:45 UTC)
+> Perfectly done Save everything even our chats and then push to my repo
+
+**Claude** (03:45 UTC)
+This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.

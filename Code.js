@@ -1339,6 +1339,22 @@ function getSickLeaveSummaries(userId) {
 //
 // Re-uploading with a code already present in destSheet's Code column (E) overwrites
 // that row instead of appending a duplicate.
+var MIN_PDF_BYTES = 1024;        // 1 KB floor
+var MAX_PDF_BYTES = 500 * 1024;  // 500 KB cap
+
+function assertValidPdfBytes(bytes) {
+  if (bytes.length < MIN_PDF_BYTES || bytes.length > MAX_PDF_BYTES) {
+    throw new Error('PDF must be between 1KB and 500KB.');
+  }
+  var header = '';
+  for (var i = 0; i < 5; i++) {
+    header += String.fromCharCode(bytes[i] & 0xFF);
+  }
+  if (header !== '%PDF-') {
+    throw new Error('File is not a valid PDF.');
+  }
+}
+
 function upsertUploadRow(destSheet, code, rowValues) {
   var lastRow = destSheet.getLastRow();
   if (lastRow >= 2) {
@@ -1354,7 +1370,9 @@ function upsertUploadRow(destSheet, code, rowValues) {
 }
 
 function uploadSickLeavePdf(base64Data, fileName, name, id, summary, code) {
-  var blob = Utilities.newBlob(Utilities.base64Decode(base64Data), 'application/pdf', fileName);
+  var bytes = Utilities.base64Decode(base64Data);
+  assertValidPdfBytes(bytes);
+  var blob = Utilities.newBlob(bytes, 'application/pdf', fileName);
   var file = DriveApp.getFolderById('1hmDFt8N5pHcN_12DYjJjc6iSRe03HIDT').createFile(blob);
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
@@ -1388,7 +1406,9 @@ function getVacationUploadSummaries(userId) {
 }
 
 function uploadVacationPdf(base64Data, fileName, name, id, summary, code) {
-  var blob = Utilities.newBlob(Utilities.base64Decode(base64Data), 'application/pdf', fileName);
+  var bytes = Utilities.base64Decode(base64Data);
+  assertValidPdfBytes(bytes);
+  var blob = Utilities.newBlob(bytes, 'application/pdf', fileName);
   var file = DriveApp.getFolderById('1tH-pHaE56TqdZnoeo0U70QF2SGeXmduC').createFile(blob);
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
@@ -1401,7 +1421,9 @@ function uploadVacationPdf(base64Data, fileName, name, id, summary, code) {
 // اقرار عودة upload: same dropdown source as uploadVacationPdf (Vacation!BS/J via
 // getVacationUploadSummaries), different Drive folder + destination tab.
 function uploadEqrarAwdahPdf(base64Data, fileName, name, id, summary, code) {
-  var blob = Utilities.newBlob(Utilities.base64Decode(base64Data), 'application/pdf', fileName);
+  var bytes = Utilities.base64Decode(base64Data);
+  assertValidPdfBytes(bytes);
+  var blob = Utilities.newBlob(bytes, 'application/pdf', fileName);
   var file = DriveApp.getFolderById('1jxs7InR6x0BLApf6OiDOzTattVbP-AW3').createFile(blob);
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 

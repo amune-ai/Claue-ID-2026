@@ -341,6 +341,15 @@
     const THUMBS_UP_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/thumbsup.mp4";
     const NO_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/no.mp4";
     const TL_VIDEO = "https://cdn.jsdelivr.net/gh/amune-ai/ads-animations@main/tl.mp4";
+    const MIN_PDF_BYTES = 1024;        // 1 KB floor
+    const MAX_PDF_BYTES = 500 * 1024;  // 500 KB cap
+    function isRealPdfBase64(base64) {
+      try {
+        return atob(base64.substring(0, 16)).indexOf('%PDF-') === 0; // 16 b64 chars = 12 bytes, enough for the "%PDF-" signature
+      } catch (e) {
+        return false;
+      }
+    }
     document.getElementById('mascotVideo').src = WELCOMING_VIDEO;
     (function(){
       var tiltWrap = document.getElementById('mascotTiltWrap');
@@ -2460,6 +2469,8 @@ function prepSickLeaveUpload() {
   document.getElementById('sickLeaveCode7').value = '';
   var select = document.getElementById('sickLeaveSummary7');
   select.innerHTML = '<option disabled selected>Loading...</option>';
+  var btn7 = document.getElementById('btn7');
+  btn7.disabled = true; // stays disabled until the real options are loaded, blocking submit during "Loading..."
   google.script.run
     .withSuccessHandler(function(list) {
       select.innerHTML = '<option disabled selected>Choose</option>';
@@ -2470,8 +2481,12 @@ function prepSickLeaveUpload() {
         opt.setAttribute('data-code', item.code);
         select.appendChild(opt);
       });
+      btn7.disabled = false;
     })
-    .withFailureHandler(handleRequestFailure)
+    .withFailureHandler(function(err) {
+      btn7.disabled = false;
+      handleRequestFailure(err);
+    })
     .getSickLeaveSummaries(document.getElementById('idStorage').innerHTML);
 }
 
@@ -2482,15 +2497,26 @@ function fillSickLeaveCode() {
 }
 
 function submitSickLeaveUpload() {
-  var summary = document.getElementById('sickLeaveSummary7').value;
+  var select7 = document.getElementById('sickLeaveSummary7');
+  var summary = select7.value;
+  var selectedOpt7 = select7.options[select7.selectedIndex];
   var code = document.getElementById('sickLeaveCode7').value;
   var fileInput = document.getElementById('pdfFile7');
   var file = fileInput.files[0];
 
-  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+  if (!summary || !selectedOpt7 || selectedOpt7.disabled || !file || file.type !== 'application/pdf') {
     Swal.fire({
       title: "",
       html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a sick leave and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  if (file.size < MIN_PDF_BYTES || file.size > MAX_PDF_BYTES) {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>PDF must be between 1KB and 500KB</div>',
       showConfirmButton: true
     });
     return;
@@ -2502,6 +2528,15 @@ function submitSickLeaveUpload() {
   var reader = new FileReader();
   reader.onload = function() {
     var base64 = reader.result.split(',')[1];
+    if (!isRealPdfBase64(base64)) {
+      btn7.disabled = false;
+      Swal.fire({
+        title: "",
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>File is not a valid PDF</div>',
+        showConfirmButton: true
+      });
+      return;
+    }
     document.getElementById('loadingData').classList.toggle('invisible');
     google.script.run
       .withSuccessHandler(function() {
@@ -2547,6 +2582,8 @@ function prepVacationUpload() {
   document.getElementById('vacationCode9').value = '';
   var select = document.getElementById('vacationSummary9');
   select.innerHTML = '<option disabled selected>Loading...</option>';
+  var btn9 = document.getElementById('btn9');
+  btn9.disabled = true; // stays disabled until the real options are loaded, blocking submit during "Loading..."
   google.script.run
     .withSuccessHandler(function(list) {
       select.innerHTML = '<option disabled selected>Choose</option>';
@@ -2557,8 +2594,12 @@ function prepVacationUpload() {
         opt.setAttribute('data-code', item.code);
         select.appendChild(opt);
       });
+      btn9.disabled = false;
     })
-    .withFailureHandler(handleRequestFailure)
+    .withFailureHandler(function(err) {
+      btn9.disabled = false;
+      handleRequestFailure(err);
+    })
     .getVacationUploadSummaries(document.getElementById('idStorage').innerHTML);
 }
 
@@ -2569,15 +2610,26 @@ function fillVacationCode() {
 }
 
 function submitVacationUpload() {
-  var summary = document.getElementById('vacationSummary9').value;
+  var select9 = document.getElementById('vacationSummary9');
+  var summary = select9.value;
+  var selectedOpt9 = select9.options[select9.selectedIndex];
   var code = document.getElementById('vacationCode9').value;
   var fileInput = document.getElementById('pdfFile9');
   var file = fileInput.files[0];
 
-  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+  if (!summary || !selectedOpt9 || selectedOpt9.disabled || !file || file.type !== 'application/pdf') {
     Swal.fire({
       title: "",
       html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a vacation and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  if (file.size < MIN_PDF_BYTES || file.size > MAX_PDF_BYTES) {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>PDF must be between 1KB and 500KB</div>',
       showConfirmButton: true
     });
     return;
@@ -2589,6 +2641,15 @@ function submitVacationUpload() {
   var reader = new FileReader();
   reader.onload = function() {
     var base64 = reader.result.split(',')[1];
+    if (!isRealPdfBase64(base64)) {
+      btn9.disabled = false;
+      Swal.fire({
+        title: "",
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>File is not a valid PDF</div>',
+        showConfirmButton: true
+      });
+      return;
+    }
     document.getElementById('loadingData').classList.toggle('invisible');
     google.script.run
       .withSuccessHandler(function() {
@@ -2619,6 +2680,8 @@ function prepEqrarAwdahUpload() {
   document.getElementById('eqrarawdahCode10').value = '';
   var select = document.getElementById('eqrarawdahSummary10');
   select.innerHTML = '<option disabled selected>Loading...</option>';
+  var btn10 = document.getElementById('btn10');
+  btn10.disabled = true; // stays disabled until the real options are loaded, blocking submit during "Loading..."
   google.script.run
     .withSuccessHandler(function(list) {
       select.innerHTML = '<option disabled selected>Choose</option>';
@@ -2629,8 +2692,12 @@ function prepEqrarAwdahUpload() {
         opt.setAttribute('data-code', item.code);
         select.appendChild(opt);
       });
+      btn10.disabled = false;
     })
-    .withFailureHandler(handleRequestFailure)
+    .withFailureHandler(function(err) {
+      btn10.disabled = false;
+      handleRequestFailure(err);
+    })
     .getVacationUploadSummaries(document.getElementById('idStorage').innerHTML);
 }
 
@@ -2641,15 +2708,26 @@ function fillEqrarAwdahCode() {
 }
 
 function submitEqrarAwdahUpload() {
-  var summary = document.getElementById('eqrarawdahSummary10').value;
+  var select10 = document.getElementById('eqrarawdahSummary10');
+  var summary = select10.value;
+  var selectedOpt10 = select10.options[select10.selectedIndex];
   var code = document.getElementById('eqrarawdahCode10').value;
   var fileInput = document.getElementById('pdfFile10');
   var file = fileInput.files[0];
 
-  if (!summary || summary === 'Choose' || !file || file.type !== 'application/pdf') {
+  if (!summary || !selectedOpt10 || selectedOpt10.disabled || !file || file.type !== 'application/pdf') {
     Swal.fire({
       title: "",
       html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please choose a vacation and a PDF file</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+
+  if (file.size < MIN_PDF_BYTES || file.size > MAX_PDF_BYTES) {
+    Swal.fire({
+      title: "",
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>PDF must be between 1KB and 500KB</div>',
       showConfirmButton: true
     });
     return;
@@ -2661,6 +2739,15 @@ function submitEqrarAwdahUpload() {
   var reader10 = new FileReader();
   reader10.onload = function() {
     var base64 = reader10.result.split(',')[1];
+    if (!isRealPdfBase64(base64)) {
+      btn10.disabled = false;
+      Swal.fire({
+        title: "",
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>File is not a valid PDF</div>',
+        showConfirmButton: true
+      });
+      return;
+    }
     document.getElementById('loadingData').classList.toggle('invisible');
     google.script.run
       .withSuccessHandler(function() {
