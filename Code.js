@@ -1321,8 +1321,18 @@ function syncDataFast() {
 
 //   return result;
 // }
+// Vacation PDFs plus إعلام عودة PDFs (EqrarAwdah copies Vacation's K-X, so cols K/M line up).
 function getVacationsPdf(userId) {
-  var sheet = ss.getSheetByName('Vacation');
+  var result = collectApprovedPdfs('Vacation', 'Vacations PDF', userId)
+    .concat(collectApprovedPdfs('EqrarAwdah', 'إعلام عودة PDF', userId));
+  result.sort(function(a, b) {
+    return b.timestamp - a.timestamp;
+  });
+  return result;
+}
+
+function collectApprovedPdfs(sheetName, label, userId) {
+  var sheet = ss.getSheetByName(sheetName);
   var lastRow = sheet.getLastRow();
 
   if (lastRow < 2) return [];
@@ -1351,14 +1361,11 @@ function getVacationsPdf(userId) {
       result.push({
         timestamp: timestamp.getTime(),
         colK: colK,
-        pdfUrl: pdfUrl
+        pdfUrl: pdfUrl,
+        label: label
       });
     }
   }
-
-  result.sort(function(a, b) {
-    return b.timestamp - a.timestamp;
-  });
 
   return result;
 }

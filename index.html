@@ -2509,7 +2509,7 @@ function checkVacationsPdf() {
         var btnHtml = pdfId
           ? '<button class="btn-download-pdf" data-pdf-id="' + pdfId + '" ' +
             'style="background:none; border:none; color:blue; cursor:pointer; text-decoration:underline;">' +
-            'Vacations PDF</button>'
+            item.label + '</button>'
           : 'N/A';
         return '<tr>' +
           '<td style="padding:8px; border:1px solid #ddd; font-size:13px;">' + item.colK + '</td>' +

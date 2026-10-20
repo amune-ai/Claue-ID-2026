@@ -339,3 +339,23 @@ Set the folder, pushed and deployed (`@50`). Verified live: the option, the new 
 
 **Claude**
 This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.
+
+---
+
+**User**
+> now lets move to second modifications under "Vacation PDFs Button": add and combine the links from tab "EqrarAwdah" to this popup, the difference here we will change the blue clickable text "Vacations PDF" in Col PDF to be "إعلام عودة PDF" for links from tab "EqrarAwdah".
+
+**Claude**
+`getVacationsPdf()` now merges two lists via a new `collectApprovedPdfs(sheetName, label, userId)` (same rules as before: user's ID in col C, col M = "Approved by Admin", PDF link in BD, details from col K) — one for `Vacation` labelled "Vacations PDF", one for `EqrarAwdah` labelled "إعلام عودة PDF" — sorted newest first. The popup button text now comes from `item.label`. Flagged that EqrarAwdah's col M is copied from the Vacation row at submission, so a notice for an already-approved vacation appears straight away.
+
+**User**
+> yes thats what i want. push and deploy
+
+**Claude**
+Pushed and deployed (`@51`). Verified the live page uses `item.label` and the hardcoded "Vacations PDF" text is gone; the server side can only be confirmed by opening the popup as a user with both kinds of PDFs.
+
+**User**
+> Perfectly done master Claude, i raise my hat to you. save everything and push to my repo even our chats
+
+**Claude**
+This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.
