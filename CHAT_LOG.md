@@ -270,3 +270,72 @@ Pushed and deployed (`@48`), verified live by confirming `isRealPdfBase64`, `MIN
 
 **Claude** (03:45 UTC)
 This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.
+
+---
+---
+
+# Chat Log — 2026-10-14 / 2026-10-20 session
+
+Session with Claude Code covering: a wording change in the sick-leave popup, and adding an "إعلام عودة" (return-from-vacation notice) option to the Vacation request popup.
+
+---
+
+## 2026-10-14
+
+**User**
+> i need to replace in index.html this sentence "تسليم المرضية على واتساب الإدارة في حال استلامها من برنامج سالم او سهل" to "رفع المرضية على الموقع في حال استلامها من برنامج سالم او سهل"
+
+**Claude**
+Replaced it in the sick-leave thumbs-up popup (index.html, `Swal.fire` message). Local only at that point.
+
+**User**
+> Push and deploy
+
+**Claude**
+`clasp push` + `clasp deploy` to the production deployment (`@49`). Verified live by fetching the `/exec` URL: new sentence present, old one gone.
+
+**User**
+> yes save everything and then uploade to my github repo
+
+**Claude**
+Committed (`28e493f`) and pushed to `amune-ai/Claue-ID-2026` `main`.
+
+---
+
+## 2026-10-20
+
+**User**
+> i need to do some modification under Request section : in Vacation Popup Form, can you locate its code in both Code.gs and index.html files
+
+**Claude**
+Mapped it: the Vacation button opens `#exampleModal3`; the form markup; `clr()` prefill; `confirmSubmit3()` (validation, Khafara conflict check, calls `saveData3`); `activateSubmit3()`; `ctDate()`. Server side: `saveData3()` in Code.js (عرضي limit, writes A–I of `Vacation`, PDF from template, email) and the `generatePdf*` helpers.
+
+**User**
+> 1. add under Vacation Type Dropdown a new element "إعلام عودة" below Vacation, تمديد, Vacation (عرضي).
+> 2. if I choose "إعلام عودة":
+> A. hide From, To, Number of days, Weekend Duty question, and the "Informed the Team Leader" tick.
+> B. show: Select your Vacation (dropdown, same technique as "Upload my Signed Vacation PDF"), its Code from tab "Vacation", and Due Date (تاريخ المباشرة) with a calendar.
+> C. submit to tab "EqrarAwdah": Col A Timestamp, Col I Due Date, Col J Code, Col BD PDF link; PDF from template `1TtsMqba_TXuLEeieVf0hlr3WEDvSbrD87CwBLsXSwBQ`; Cols B–H and K–X copied from the "Vacation" row matching the Code (col J).
+
+**Claude**
+Read the template and found it already has the needed placeholders (`{Name}`, `{ID}`, `{Civil ID}`, `{Nationality}`, `{Job title}`, `{Mobile No.}`, `{المركز}`, `{تاريخ التعيين بالوزارة}`, `{From Date}`, `{To Date}`, `{No.Days}`, `{Timestamp}`, `{Due Date}`). Implemented:
+- index.html: new option; the normal fields tagged `vac-normal`, new `vac-return` fields (`vacationSummary3`, `vacationCode3`, `dueDate3`); `toggleReturnFields()` swaps them and loads the dropdown via the existing `getVacationUploadSummaries()`; `fillReturnCode()`; `submitReturnNotice()` (validation, double-submit guard). `confirmSubmit3()` routes to it when إعلام عودة is chosen.
+- Code.js: new `saveReturnNotice(obj)` — finds the Vacation row by Code **and** the user's ID (so nobody can file for someone else's vacation), writes A–X to `EqrarAwdah` (A timestamp, B–H + K–X from Vacation, I due date, J code), fills the template, saves the PDF, writes its link to BD.
+
+Asked about PDF folder, duplicates, email, and whether the tab exists.
+
+**User**
+> 1. PDF Folder `1vHpIls-Ccg9IKs6hj-dy7l37wurRwyr4`
+> 2. Repeat submissions: submitting the same code twice adds a second row.
+> 3. No email.
+> 4. The EqrarAwdah tab already exists in the main spreadsheet.
+> push and deploy
+
+**Claude**
+Set the folder, pushed and deployed (`@50`). Verified live: the option, the new fields, `toggleReturnFields`, `submitReturnNotice` and `.saveReturnNotice(` are all served.
+
+**User**
+> Perfectly Done. yes now save everything and then push to my repo even our chats
+
+**Claude**
+This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.

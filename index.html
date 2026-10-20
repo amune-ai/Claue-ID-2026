@@ -740,26 +740,42 @@
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Vacation Type:</label>
-            <select class="form-control" id="question3">
+            <select class="form-control" id="question3" onchange="toggleReturnFields()">
               <option disabled selected>Choose</option>
               <option>Vacation</option>
               <option>تمديد</option>
               <option>Vacation (عرضي)</option>
+              <option>إعلام عودة</option>
             </select>
           </div>
-          <div class="form-group">
+          <!-- إعلام عودة only: shown by toggleReturnFields() -->
+          <div class="form-group vac-return" style="display:none">
+            <label for="message-text" class="col-form-label">Select your Vacation:</label>
+            <select class="form-control" id="vacationSummary3" onchange="fillReturnCode()">
+              <option disabled selected>Choose</option>
+            </select>
+          </div>
+          <div class="form-group vac-return" style="display:none">
+            <label for="message-text" class="col-form-label">Code:</label>
+            <input type="text" class="form-control" id="vacationCode3" autocomplete="off" disabled>
+          </div>
+          <div class="form-group vac-return" style="display:none">
+            <label for="message-text" class="col-form-label">Due Date (تاريخ المباشرة):</label>
+            <input type="date" class="form-control" id="dueDate3" autocomplete="off">
+          </div>
+          <div class="form-group vac-normal">
             <label for="message-text" class="col-form-label">From:</label>
             <input onchange="ctDate()" type="date" class="form-control" id="from" autocomplete="off">
           </div>
-          <div class="form-group">
+          <div class="form-group vac-normal">
             <label for="message-text" class="col-form-label">To:</label>
             <input onchange="ctDate()" type="date" class="form-control" id="to" autocomplete="off">
           </div>
-          <div class="form-group">
+          <div class="form-group vac-normal">
             <label for="message-text" class="col-form-label">Number of days:</label>
             <input disabled type="number" class="form-control" id="numberOf3" autocomplete="off">
           </div>
-          <div class="form-group">
+          <div class="form-group vac-normal">
             <label for="message-text" class="col-form-label">Is there any Weekend Duty during Vacation ?</label>
             <select class="form-control" id="question3b">
               <option disabled selected>Choose</option>
@@ -769,10 +785,10 @@
           </div>
         </form>
        <!-- additional checkbox to activate submit button -->
-        <label class="" for="confirmation3">
+        <label class="vac-normal" for="confirmation3">
           <input onchange="activateSubmit3()" type="checkbox" id="confirmation3" class="multiCheck" value="checked">
            &nbsp;Informed the Team Leader
-        </label><br>
+        </label><br class="vac-normal">
       </div>
       <div class="modal-footer">
         <button onclick="confirmSubmit3()" id="btn3" type="button" class="btn btn-primary" disabled>Confirm</button>
@@ -1484,6 +1500,7 @@ function hasKhafaraConflict(dateFrom, dateTo, khafaraDates) {
 }
 // Updated Submit 3 confirm function
 function confirmSubmit3() {
+    if (document.getElementById('question3').value === 'إعلام عودة') return submitReturnNotice();
     let name3 = document.getElementById('name3');
     let id3 = document.getElementById('id3');
     let centers3 = document.getElementById('centers3');
@@ -1829,6 +1846,84 @@ function activateSubmit6(){
    let submit = document.getElementById('btn6');
    submit.disabled = confirmation.checked ? false : true;
 };
+// إعلام عودة: swap the Vacation popup between its normal fields and the return-notice fields.
+function toggleReturnFields() {
+  var isReturn = document.getElementById('question3').value === 'إعلام عودة';
+  document.querySelectorAll('#exampleModal3 .vac-normal').forEach(function(el) { el.style.display = isReturn ? 'none' : ''; });
+  document.querySelectorAll('#exampleModal3 .vac-return').forEach(function(el) { el.style.display = isReturn ? '' : 'none'; });
+  var btn3 = document.getElementById('btn3');
+  if (!isReturn) {
+    btn3.disabled = !document.getElementById('confirmation3').checked;
+    return;
+  }
+  // Same dropdown source as "Upload my Signed Vacation PDF" (Vacation!BS / Code from J).
+  document.getElementById('vacationCode3').value = '';
+  document.getElementById('dueDate3').value = '';
+  var select = document.getElementById('vacationSummary3');
+  select.innerHTML = '<option disabled selected>Loading...</option>';
+  btn3.disabled = true; // stays disabled until the real options are loaded
+  google.script.run
+    .withSuccessHandler(function(list) {
+      select.innerHTML = '<option disabled selected>Choose</option>';
+      (list || []).forEach(function(item) {
+        var opt = document.createElement('option');
+        opt.value = item.summary;
+        opt.innerText = item.summary;
+        opt.setAttribute('data-code', item.code);
+        select.appendChild(opt);
+      });
+      btn3.disabled = false;
+    })
+    .withFailureHandler(function(err) {
+      btn3.disabled = false;
+      handleRequestFailure(err);
+    })
+    .getVacationUploadSummaries(document.getElementById('idStorage').innerHTML);
+}
+
+function fillReturnCode() {
+  var select = document.getElementById('vacationSummary3');
+  var opt = select.options[select.selectedIndex];
+  document.getElementById('vacationCode3').value = opt ? (opt.getAttribute('data-code') || '') : '';
+}
+
+function submitReturnNotice() {
+  var select = document.getElementById('vacationSummary3');
+  var code = document.getElementById('vacationCode3').value;
+  var dueDate = document.getElementById('dueDate3').value;
+  if (select.options[select.selectedIndex].disabled || code === '' || dueDate === '') {
+    Swal.fire({
+      title: 'Wrong...',
+      html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Please fill all the fields</div>',
+      showConfirmButton: true
+    });
+    return;
+  }
+  var btn3 = document.getElementById('btn3');
+  btn3.disabled = true; // block double-click duplicates while the request is in flight
+  document.getElementById('loadingData').classList.toggle('invisible');
+  google.script.run
+    .withSuccessHandler(function() {
+      document.getElementById('loadingData').classList.toggle('invisible');
+      document.getElementById('question3').selectedIndex = 0;
+      toggleReturnFields();
+      Swal.fire({
+        title: 'Thank you',
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + THUMBS_UP_VIDEO + '"></video><div>Data has been sent</div>',
+        showConfirmButton: true
+      });
+    })
+    .withFailureHandler(function(err) {
+      document.getElementById('loadingData').classList.toggle('invisible');
+      btn3.disabled = false;
+      Swal.fire({
+        title: 'Error',
+        html: '<video autoplay muted playsinline style="width:160px;height:160px;object-fit:contain;display:block;margin:0 auto 8px;" src="' + NO_VIDEO + '"></video><div>Failed to submit data</div>'
+      });
+    })
+    .saveReturnNotice({id: document.getElementById('idStorage').innerHTML, code: code, dueDate: dueDate});
+}
+
 function ctDate(){
   // console.log('value: '+e.target.value);
   let dt1 = new Date (document.getElementById('from').value).getTime();

@@ -449,6 +449,58 @@ sheet.getRange(lastRow + 1, 1, 1, 9).setValues([[
 
 }
 
+// إعلام عودة (return-from-vacation notice): copies the Vacation row matching obj.code
+// (col J) into EqrarAwdah - A: Timestamp, B-H + K-X: from Vacation, I: Due Date, J: Code,
+// BD: PDF link.
+function saveReturnNotice(obj) {
+  let vacSheet = ss.getSheetByName('Vacation');
+  let vacData = vacSheet.getRange(1, 1, vacSheet.getLastRow(), vacSheet.getLastColumn()).getValues();
+  // Match on ID (col C) too, so a user can only file a notice for their own vacation.
+  let vacRow = vacData.find(r => r[9].toString().trim() === obj.code.toString().trim() &&
+                                 r[2].toString().trim() === obj.id.toString().trim());
+  if (!vacRow) throw new Error('Vacation code not found: ' + obj.code);
+
+  let timestamp = new Date();
+  let sheet = ss.getSheetByName('EqrarAwdah');
+  let lastRow = sheet.getRange("A:A").getValues().filter(String).length;
+  sheet.getRange(lastRow + 1, 1, 1, 24).setValues([
+    [timestamp].concat(vacRow.slice(1, 8), [obj.dueDate, obj.code], vacRow.slice(10, 24))
+  ]);
+
+  // Template placeholders are filled straight from the Vacation row (same indices as saveData3).
+  let replacements = {
+    '{Timestamp}': formatDate(timestamp, 'YYYY-MM-DD'),
+    '{Name}': vacRow[48] ? vacRow[48].toString() : '',
+    '{ID}': vacRow[2] ? vacRow[2].toString() : '',
+    '{Civil ID}': vacRow[49] ? vacRow[49].toString() : '',
+    '{Nationality}': vacRow[50] ? vacRow[50].toString() : '',
+    '{Job title}': vacRow[51] ? vacRow[51].toString() : '',
+    '{Mobile No.}': vacRow[52] ? vacRow[52].toString() : '',
+    '{المركز}': vacRow[53] ? vacRow[53].toString() : '',
+    '{تاريخ التعيين بالوزارة}': vacRow[54] ? formatDate(vacRow[54], 'YYYY-MM-DD') : '',
+    '{From Date}': vacRow[5] ? formatDate(vacRow[5], 'YYYY-MM-DD') : '',
+    '{To Date}': vacRow[6] ? formatDate(vacRow[6], 'YYYY-MM-DD') : '',
+    '{No.Days}': vacRow[7] ? vacRow[7].toString() : '',
+    '{Due Date}': obj.dueDate
+  };
+
+  let folder = DriveApp.getFolderById('1vHpIls-Ccg9IKs6hj-dy7l37wurRwyr4');
+  let copy = DriveApp.getFileById('1TtsMqba_TXuLEeieVf0hlr3WEDvSbrD87CwBLsXSwBQ').makeCopy(
+    'إعلام عودة, ' + vacRow[1] + ', ' + obj.code + ', ' + obj.dueDate, folder
+  );
+  let doc = DocumentApp.openById(copy.getId());
+  let body = doc.getBody();
+  for (let label in replacements) {
+    body.replaceText(label, replacements[label]);
+  }
+  doc.saveAndClose();
+  let pdfFile = folder.createFile(copy.getAs('application/pdf'));
+  copy.setTrashed(true);
+
+  sheet.getRange(lastRow + 1, 56).setValue(pdfFile.getUrl()); // col BD
+  return pdfFile.getId();
+}
+
 function formatDate(dateValue, format = 'DD/MM/YYYY') {
   if (!dateValue) return '';
   
