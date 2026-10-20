@@ -359,3 +359,19 @@ Pushed and deployed (`@51`). Verified the live page uses `item.label` and the ha
 
 **Claude**
 This entry, `Code.js`/`index.html` changes, and memory — committed and pushed.
+
+---
+
+**User**
+> i want you now to list for me the all changed occured in this whole session of today modifications in both Code.gs and index.html files please.
+
+**Claude**
+Listed both of today's changes (commits `3352521` and `df82720`, 168 lines added / 14 changed or removed):
+- **إعلام عودة in the Vacation popup** — index.html: new option, three `vac-return` fields (`vacationSummary3`, `vacationCode3`, `dueDate3`), normal fields tagged `vac-normal`, `confirmSubmit3()` routing, new `toggleReturnFields()`, `fillReturnCode()`, `submitReturnNotice()`. Code.js: new `saveReturnNotice()` (Vacation row lookup by Code + ID → `EqrarAwdah` A/B–H/I/J/K–X, PDF to folder `1vHpIls-…`, link in BD).
+- **Vacations PDFs popup** — Code.js: `getVacationsPdf()` merges `Vacation` + `EqrarAwdah` via new `collectApprovedPdfs()`; index.html: link text from `item.label`.
+
+**User**
+> Save everyhting and push to my repo
+
+**Claude**
+No code changes were pending; this chat-log entry committed and pushed.
