@@ -1321,17 +1321,18 @@ function syncDataFast() {
 
 //   return result;
 // }
-// Vacation PDFs plus إعلام عودة PDFs (EqrarAwdah copies Vacation's K-X, so cols K/M line up).
+// Vacation PDFs plus إعلام عودة PDFs (EqrarAwdah copies Vacation's K-X, so col K lines up).
 function getVacationsPdf(userId) {
-  var result = collectApprovedPdfs('Vacation', 'Vacations PDF', userId)
-    .concat(collectApprovedPdfs('EqrarAwdah', 'إعلام عودة PDF', userId));
+  var result = collectApprovedPdfs('Vacation', 'Vacations PDF', userId, 13, 'Approved by Admin')
+    .concat(collectApprovedPdfs('EqrarAwdah', 'إعلام عودة PDF', userId, 25, 'Approved3'));
   result.sort(function(a, b) {
     return b.timestamp - a.timestamp;
   });
   return result;
 }
 
-function collectApprovedPdfs(sheetName, label, userId) {
+// statusCol/approvedValue: Vacation uses M = 'Approved by Admin', EqrarAwdah uses Y = 'Approved3'.
+function collectApprovedPdfs(sheetName, label, userId, statusCol, approvedValue) {
   var sheet = ss.getSheetByName(sheetName);
   var lastRow = sheet.getLastRow();
 
@@ -1340,14 +1341,14 @@ function collectApprovedPdfs(sheetName, label, userId) {
   var dataA = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
   var dataC = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
   var dataK = sheet.getRange(2, 11, lastRow - 1, 1).getValues();
-  var dataM = sheet.getRange(2, 13, lastRow - 1, 1).getValues();
+  var dataStatus = sheet.getRange(2, statusCol, lastRow - 1, 1).getValues();
   var dataBD = sheet.getRange(2, 56, lastRow - 1, 1).getValues();
 
   var result = [];
 
   for (var i = 0; i < dataC.length; i++) {
     var rowId = dataC[i][0] ? dataC[i][0].toString().trim() : '';
-    var approvalStatus = dataM[i][0] ? dataM[i][0].toString().trim() : '';
+    var approvalStatus = dataStatus[i][0] ? dataStatus[i][0].toString().trim() : '';
     var colK = dataK[i][0] ? dataK[i][0].toString().trim() : '';
     var pdfUrl = dataBD[i][0] ? dataBD[i][0].toString().trim() : '';
     var timestamp = dataA[i][0] ? new Date(dataA[i][0]) : new Date(0);
@@ -1357,7 +1358,7 @@ function collectApprovedPdfs(sheetName, label, userId) {
       console.log('Row ' + (i+2) + ' | ID: ' + rowId + ' | approvalStatus: [' + approvalStatus + '] | pdfUrl: ' + pdfUrl);
     }
 
-    if (rowId === userId.toString().trim() && approvalStatus === 'Approved by Admin' && pdfUrl !== '') {
+    if (rowId === userId.toString().trim() && approvalStatus === approvedValue && pdfUrl !== '') {
       result.push({
         timestamp: timestamp.getTime(),
         colK: colK,

@@ -375,3 +375,11 @@ Listed both of today's changes (commits `3352521` and `df82720`, 168 lines added
 
 **Claude**
 No code changes were pending; this chat-log entry committed and pushed.
+
+---
+
+**User**
+> modify the rule for displaying the "EqrarAwdah" links in "Vacations PDFs": show them when EqrarAwdah col Y is "Approved3" (instead of col M "Approved by Admin").
+
+**Claude**
+`collectApprovedPdfs()` now takes the status column + approved value per sheet: Vacation keeps M = "Approved by Admin", EqrarAwdah uses Y = "Approved3". Committed, pushed and deployed.
