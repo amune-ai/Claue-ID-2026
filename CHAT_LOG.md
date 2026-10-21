@@ -389,3 +389,15 @@ No code changes were pending; this chat-log entry committed and pushed.
 
 **Claude**
 No code changes were pending; this chat-log entry committed and pushed.
+
+**User**
+> can you point for me the rows number in both code.gs and index.html files where these last modification take place ?
+
+**Claude**
+Only Code.js changed (index.html untouched). Lines: 1324 (comment), 1326–1327 (per-sheet rule: Vacation M/13 "Approved by Admin", EqrarAwdah Y/25 "Approved3"), 1334–1335 (new comment + `statusCol`/`approvedValue` params), 1344 (`dataStatus` read), 1351 (`approvalStatus` source), 1361 (compare to `approvedValue`).
+
+**User**
+> ok save everything even our chats and then push to my repo
+
+**Claude**
+No code changes were pending; this chat-log entry committed and pushed.
