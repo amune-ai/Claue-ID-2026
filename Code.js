@@ -1807,3 +1807,43 @@ function diagnoseVacationSheetSize() {
 
   return report;
 }
+
+// Inlines another project .html file into index.html via <?!= include('Name'); ?>.
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+}
+
+// ===== Guided tour (Tour.html) =====
+// First-login flag lives in the Information sheet, column headed "TourDone" (found by header,
+// created on first write). Empty = show the tour automatically; a timestamp = already seen.
+// To show it again for a doctor, clear their cell in that column.
+function getTourCell_(id, createColumn) {
+  var sheet = ss.getSheetByName('Information');
+  var lastCol = sheet.getLastColumn();
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return null;
+  var col = sheet.getRange(1, 1, 1, lastCol).getDisplayValues()[0].indexOf('TourDone') + 1;
+  if (!col) {
+    if (!createColumn) return null;
+    if (lastCol >= sheet.getMaxColumns()) sheet.insertColumnAfter(lastCol);
+    col = lastCol + 1;
+    sheet.getRange(1, col).setValue('TourDone');
+  }
+  var ids = sheet.getRange(2, 2, lastRow - 1, 1).getDisplayValues(); // col B = ID, same as getData()
+  var key = String(id).trim();
+  for (var i = 0; i < ids.length; i++) {
+    if (ids[i][0].trim() === key) return sheet.getRange(i + 2, col);
+  }
+  return null;
+}
+
+// true = tour already done for this ID; false (incl. column not created yet) = show it.
+function getTourStatus(id) {
+  var cell = getTourCell_(id, false);
+  return !!cell && cell.getValue() !== '';
+}
+
+function setTourDone(id) {
+  var cell = getTourCell_(id, true);
+  if (cell) cell.setValue(new Date());
+}

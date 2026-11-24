@@ -1,0 +1,199 @@
+<!-- Guided tour (Driver.js). Included from index.html via include('Tour').
+     If the library fails to load, nothing here runs and the site works as before. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.14.0/dist/driver.css">
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1.14.0/dist/driver.js.iife.js"></script>
+
+<style>
+  #tourHelpBtn {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: navy;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+  }
+  .tour-form-link {
+    display: block;
+    direction: rtl;
+    text-align: right;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .driver-popover.tour-rtl {
+    direction: rtl;
+    text-align: right;
+    max-width: min(320px, calc(100vw - 24px));
+  }
+  .driver-popover.tour-rtl .driver-popover-title { font-size: 18px; padding-left: 24px; }
+  .driver-popover.tour-rtl .driver-popover-description { font-size: 15px; line-height: 1.7; }
+  .driver-popover.tour-rtl .driver-popover-close-btn { right: auto; left: 0; }
+  .driver-popover.tour-rtl .driver-popover-footer { flex-wrap: wrap; gap: 6px; }
+  .driver-popover.tour-rtl .driver-popover-navigation-btns { gap: 4px; }
+  .driver-popover.tour-rtl .driver-popover-footer button { font-size: 14px; padding: 4px 10px; }
+  .driver-popover.tour-rtl .tour-skip { background: transparent; border: none; color: #888; text-shadow: none; }
+</style>
+
+<button id="tourHelpBtn" type="button" title="دليل الموقع" aria-label="إعادة جولة الموقع">?</button>
+
+<script>
+  // ===================== Tour texts: edit here =====================
+  // el = CSS selector of the element to point at (leave out for a centered message).
+  var TOUR_MAIN_STEPS = [
+    { title: 'أهلاً دكتور 👋', text: 'هذا دليل سريع للموقع، خلّنا نمشي عليه خطوة خطوة.' },
+    { el: '#tourProfile', title: '📋 بياناتك', text: 'بياناتك الشخصية وملخص استئذاناتك ومرضياتك وإجازاتك.' },
+    { el: '#tourDuties', title: '🗓️ جدول الخفارات', text: 'خفاراتك، وتحتها الـ On Calls. التواريخ بالأحمر هي خفارات هذا الشهر.' },
+    { el: '#tourPermission', title: '⏰ استئذان', text: 'لتقديم استئذان بداية أو نهاية الدوام.' },
+    { el: '#tourSick', title: '🤒 مرضية', text: 'لتسجيل مرضية: التاريخ والنوع وعدد الأيام.' },
+    { el: '#tourVacation', title: '✈️ إجازة', text: 'لتقديم إجازة، ومنها تقدم «إعلام عودة» بعد ما ترجع.' },
+    { el: '#tourSwap', title: '🔁 تبديل خفارة', text: 'بدّلت خفارة الويكند مع زميل؟ سجّل التبديل هنا.' },
+    { el: '#tourCancel', title: '❌ إلغاء طلب', text: 'لإلغاء طلب سبق وقدمته.' },
+    { el: '#chApp', title: '✅ متابعة الطلبات', text: 'تابع وين وصل طلبك بالموافقات.' },
+    { el: '#vacationsPDF', title: '📄 ملفات PDF', text: 'حمّل PDF إجازاتك المعتمدة، ومن الزر اللي تحته ارفع المرضية أو الإجازة الموقعة.' },
+    { el: '#tourHelpBtn', title: '❓ تحتاج مساعدة؟', text: 'اضغط هنا بأي وقت عشان تعيد الجولة. وداخل كل طلب فيه رابط «كيف أعبي الطلب؟» 🙌' }
+  ];
+
+  // Short tours inside each request popup (key = modal id). Hidden fields are skipped automatically.
+  var TOUR_FORM_STEPS = {
+    exampleModal: [ // Permission
+      { el: '#date', title: '📅 التاريخ', text: 'اختر يوم الاستئذان.' },
+      { el: '#shift', title: '🕐 الشفت', text: 'اختر شفتك.' },
+      { el: '#period', title: '⏰ الفترة', text: 'بداية الدوام أو نهايته.' },
+      { el: 'label[for="confirmation1"]', title: '✔️ التأكيد', text: 'علّم إنك بلّغت الـ Team Leader عشان يتفعّل زر Confirm.' },
+      { el: '#btn1', title: '📨 إرسال', text: 'اضغط Confirm لإرسال الطلب.' }
+    ],
+    exampleModal2: [ // Sick Leave
+      { el: '#date2', title: '📅 التاريخ', text: 'تاريخ بداية المرضية.' },
+      { el: '#question2', title: '🤒 نوع المرضية', text: 'اختر نوع المرضية.' },
+      { el: '#numberOf2', title: '🔢 عدد الأيام', text: 'كم يوم المرضية.' },
+      { el: '#question2b', title: '✈️ قبل/بعد إجازة؟', text: 'إذا المرضية قبل أو بعد إجازة، حدد هنا.' },
+      { el: 'label[for="confirmation2"]', title: '✔️ التأكيد', text: 'علّم إنك بلّغت الـ Team Leader عشان يتفعّل زر Confirm.' },
+      { el: '#btn2', title: '📨 إرسال', text: 'اضغط Confirm لإرسال الطلب.' }
+    ],
+    exampleModal3: [ // Vacation (normal + إعلام عودة)
+      { el: '#question3', title: '✈️ نوع الإجازة', text: 'اختر النوع. لو اخترت «إعلام عودة» تتغير الحقول.' },
+      { el: '#from', title: '📅 من - إلى', text: 'حدد بداية الإجازة ونهايتها، وعدد الأيام ينحسب تلقائياً.' },
+      { el: '#question3b', title: '🗓️ خفارة ويكند؟', text: 'فيه خفارة ويكند خلال الإجازة؟' },
+      { el: '#vacationSummary3', title: '📋 اختر إجازتك', text: 'اختر الإجازة اللي رجعت منها، والكود يتعبى تلقائياً.' },
+      { el: '#dueDate3', title: '📅 تاريخ المباشرة', text: 'تاريخ رجوعك للدوام.' },
+      { el: 'label[for="confirmation3"]', title: '✔️ التأكيد', text: 'علّم إنك بلّغت الـ Team Leader عشان يتفعّل زر Confirm.' },
+      { el: '#btn3', title: '📨 إرسال', text: 'اضغط Confirm لإرسال الطلب.' }
+    ],
+    exampleModal5: [ // Weekend Duty Change
+      { el: '#centers5', title: '🏥 مركز خفارتك', text: 'المركز اللي عندك فيه خفارة الويكند، وتحته تاريخها.' },
+      { el: '#nameOfColleague5', title: '👥 الزميل', text: 'اختر الزميل اللي بدّلت معه.' },
+      { el: '#otherColleague', title: '🏥 خفارة الزميل', text: 'مركز خفارة الزميل، وتحته تاريخها.' },
+      { el: 'label[for="confirmation5"]', title: '✔️ التأكيد', text: 'علّم إنك بلّغت الزميل عشان يتفعّل زر Confirm.' },
+      { el: '#btn5', title: '📨 إرسال', text: 'اضغط Confirm لإرسال الطلب.' }
+    ]
+  };
+  // =================================================================
+
+  window.TourApp = (function () {
+    var ready = !!(window.driver && window.driver.js && window.driver.js.driver);
+
+    function arNum(n) {
+      return String(n).replace(/\d/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; });
+    }
+    function isShown(el) {
+      return !!el && el.getClientRects().length > 0;
+    }
+    function target(sel) { // highlight the whole field (label + input) when there is one
+      var el = document.querySelector(sel);
+      return el && (el.closest('.form-group') || el);
+    }
+
+    function run(steps, onDone) {
+      if (!ready) return;
+      var list = steps.filter(function (s) { return !s.el || isShown(document.querySelector(s.el)); });
+      if (!list.length) return;
+      var tour = window.driver.js.driver({
+        steps: list.map(function (s) {
+          var step = { popover: { title: s.title, description: s.text } };
+          if (s.el) step.element = target(s.el);
+          return step;
+        }),
+        showProgress: true,
+        nextBtnText: 'التالي',
+        prevBtnText: 'السابق',
+        doneBtnText: 'إنهاء',
+        popoverClass: 'tour-rtl',
+        smoothScroll: true,
+        overlayClickBehavior: 'none', // a stray tap on mobile shouldn't end the tour
+        onPopoverRender: function (popover, opts) {
+          var i = opts.driver.getActiveIndex();
+          popover.progress.textContent = arNum(i + 1) + ' من ' + arNum(list.length);
+          if (i < list.length - 1) {
+            var skip = document.createElement('button');
+            skip.type = 'button';
+            skip.className = 'tour-skip';
+            skip.textContent = 'تخطي';
+            skip.onclick = function () { tour.destroy(); };
+            popover.footerButtons.insertBefore(skip, popover.footerButtons.firstChild);
+          }
+        },
+        onDestroyed: function () { if (onDone) onDone(); } // finished, skipped or closed
+      });
+      tour.drive();
+    }
+
+    function openModalId() {
+      var m = document.querySelector('.modal.show');
+      return m && TOUR_FORM_STEPS[m.id] ? m.id : null;
+    }
+
+    function startMain() {
+      run(TOUR_MAIN_STEPS);
+    }
+
+    function startForm(modalId) {
+      run(TOUR_FORM_STEPS[modalId]);
+    }
+
+    // Called once from setData() after a successful login.
+    function onLogin(id) {
+      if (!ready || !id) return;
+      document.getElementById('tourHelpBtn').style.display = 'block';
+      google.script.run
+        .withSuccessHandler(function (done) {
+          // Don't interrupt a doctor who already opened a request popup.
+          if (done || document.querySelector('.modal.show')) return;
+          setTimeout(function () {
+            run(TOUR_MAIN_STEPS, function () {
+              google.script.run.withFailureHandler(function () {}).setTourDone(id);
+            });
+          }, 600);
+        })
+        .withFailureHandler(function () {})
+        .getTourStatus(id);
+    }
+
+    if (ready) {
+      // "?" replays the tour (never touches the TourDone column). Inside an open request popup it explains that form.
+      document.getElementById('tourHelpBtn').onclick = function () {
+        var m = openModalId();
+        if (m) startForm(m); else startMain();
+      };
+      Object.keys(TOUR_FORM_STEPS).forEach(function (modalId) {
+        var body = document.querySelector('#' + modalId + ' .modal-body');
+        if (!body) return;
+        var link = document.createElement('a');
+        link.href = 'javascript:void(0);';
+        link.className = 'tour-form-link';
+        link.textContent = '❔ كيف أعبي الطلب؟';
+        link.onclick = function () { startForm(modalId); };
+        body.insertBefore(link, body.firstChild);
+      });
+    }
+
+    return { onLogin: onLogin, startMain: startMain, startForm: startForm };
+  })();
+</script>
