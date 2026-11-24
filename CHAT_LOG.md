@@ -401,3 +401,63 @@ Only Code.js changed (index.html untouched). Lines: 1324 (comment), 1326–1327 
 
 **Claude**
 No code changes were pending; this chat-log entry committed and pushed.
+
+---
+
+# Chat Log — 2026-11-24/25 session
+
+Session with Claude Code: adding an interactive guided tour (Driver.js) for doctors, trying mascot/character clips in it, editing the tour sentences, and a reverted Code.js ID reorganization.
+
+---
+
+**User**
+> Asked (in Arabic) for a "جولة تعريفية تفاعلية" (guided onboarding tour): Driver.js via jsDelivr, RTL Arabic popovers with التالي/السابق/تخطي/إنهاء and an Arabic counter, ~6–9 main steps, first-login-only via a "TourDone" column, a fixed "?" button to replay, short "how to fill" tours inside each request form, mobile-first, code in a separate Tour.html, nothing existing broken. Plan first, then build after approval.
+
+**Claude**
+Mapped the project (single page, no tabs/menus, ID-only login via `Information` sheet col B) and proposed an 11-step plan. Approved, then built:
+- **Tour.html (new):** Driver.js 1.14.0, step texts in `TOUR_MAIN_STEPS` / `TOUR_FORM_STEPS` arrays at the top, RTL styling, Arabic counter, "تخطي" button, floating "?" button (bottom-left), form-tour links injected into Permission / Sick Leave / Vacation / Weekend Duty Change popups. Library failure = no tour, site unaffected.
+- **Code.js:** `include()`, `getTourStatus(id)`, `setTourDone(id)`. Flag = `Information` column headed `TourDone` (found by header, auto-created on first write; clear a cell to re-show).
+- **index.html:** a few `id`s, `<?!= include('Tour'); ?>`, one guarded line in `setData()` after login.
+Committed `38f45a4`, deployed `@53`, live page verified.
+
+**User**
+> Asked which column TourDone goes in.
+
+**Claude**
+No fixed letter: first empty column after the last used one in `Information`, or anywhere the user types the `TourDone` header.
+
+**User**
+> Asked to list every tour sentence; then asked about adding an animated cartoon (first a mascot, then a personal cartoon of themselves).
+
+**Claude**
+Listed all sentences (M1–M11, P/S/V/W form steps, B1–B7 labels). Gave a step-by-step guide for making a cartoon of a personal photo (image tools, image-to-video tools, square/white/no-audio clip rules, motion prompts per step). Wired the uploaded `t_wave`/`t_point` clips into the popovers (purged jsDelivr cache for the replaced files), then switched to the existing mascot clips at the user's request, then removed the mascot entirely at the user's request. None of that was deployed.
+
+**User**
+> Sentence edits: greet by doctor name in M1, new texts for M2/M4–M11, new step for the blue→yellow summary rows, new Upload PDFs step, "للمساعدة" for M11 and the form link, new confirm-checkbox text.
+
+**Claude**
+Applied; M1 shows the Arabic name (fallback English, then "دكتور"); M2 highlights Welcome card → last green row and the new step highlights blue → yellow rows (via an invisible region box). Fixed a few spellings; W4 uses "الزميل". Deployed `@54`, then M2 shortened to "بياناتك الشخصية" (`@55`).
+
+**User**
+> Add steps for "Weekend Duty Approval Request" and the Hessa chatbot.
+
+**Claude**
+Added "🤝 طلبات التبديل" (`@56`) and "حصة AI" — "لجميع الاستفسارات الإدارية أو حجز موعد مع الإدارة" (`@57`). Main tour is now 15 steps. All verified live and pushed to GitHub.
+
+**User**
+> Reorganize Code.gs so all URLs are at the top.
+
+**Claude**
+Gathered all 14 Drive/Sheet IDs into an `IDS` block at the top (verified identical behaviour). Not deployed.
+
+**User**
+> Undo the last modification.
+
+**Claude**
+Reverted Code.js to the committed version; nothing had been deployed.
+
+**User**
+> Save everything even our chats and push to my repo.
+
+**Claude**
+This chat-log entry committed and pushed. Live production version: `@57`.
