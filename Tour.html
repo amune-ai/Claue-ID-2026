@@ -16,11 +16,11 @@
     border: none;
     background: navy;
     color: #fff;
-    font-size: 24px;
-    font-weight: bold;
+    padding: 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     cursor: pointer;
   }
+  #tourHelpBtn .material-symbols-outlined { font-size: 26px; line-height: 48px; }
   .tour-form-link {
     display: block;
     direction: rtl;
@@ -42,7 +42,7 @@
   .driver-popover.tour-rtl .tour-skip { background: transparent; border: none; color: #888; text-shadow: none; }
 </style>
 
-<button id="tourHelpBtn" type="button" title="دليل الموقع" aria-label="إعادة جولة الموقع">?</button>
+<button id="tourHelpBtn" type="button" title="دليل الموقع" aria-label="دليل الموقع"><span class="material-symbols-outlined">menu_book</span></button>
 
 <script>
   // ===================== Tour texts: edit here =====================
@@ -64,7 +64,7 @@
     { el: '#vacationsPDF', title: '📄 ملفات PDF', text: 'لتحميل PDF إجازاتك المعتمدة.' },
     { el: '#uploadPdfsBtn', title: '📤 رفع الملفات', text: 'لرفع المرضية أو الإجازة الموقعة أو إعلام العودة.' },
     { el: '#chatbotFloatBtn', title: 'حصة AI', text: 'لجميع الاستفسارات الإدارية أو حجز موعد مع الإدارة' },
-    { el: '#tourHelpBtn', title: '❓ تحتاج مساعدة؟', text: 'للمساعدة' }
+    { el: '#tourHelpBtn', title: '📖 دليل الموقع', text: 'للمساعدة' }
   ];
 
   // Short tours inside each request popup (key = modal id). Hidden fields are skipped automatically.
@@ -209,7 +209,7 @@
     }
 
     if (ready) {
-      // "?" replays the tour (never touches the TourDone column). Inside an open request popup it explains that form.
+      // The guide (book) button replays the tour (never touches the TourDone column). Inside an open request popup it explains that form.
       document.getElementById('tourHelpBtn').onclick = function () {
         var m = openModalId();
         if (m) startForm(m); else startMain();
