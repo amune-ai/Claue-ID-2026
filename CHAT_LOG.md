@@ -461,3 +461,35 @@ Reverted Code.js to the committed version; nothing had been deployed.
 
 **Claude**
 This chat-log entry committed and pushed. Live production version: `@57`.
+
+---
+
+**User**
+> Change the "?" guide button to an icon that means "دليل الموقع".
+
+**Claude**
+Swapped "?" for the Material Symbols `menu_book` icon (font already loaded); tooltip/aria-label "دليل الموقع". At the user's request the last tour step was retitled "📖 دليل الموقع". Deployed `@58`, verified live, pushed.
+
+**User**
+> Move the Hessa chatbot button up a little; it covers the Close button in the 5 request popups.
+
+**Claude**
+Raised `#chatbotFloatBtn` from `bottom: 24px` to 100px, then (user: "bring it down half way") to **62px**. Deployed `@59`, verified live, pushed.
+
+**User**
+> Summarize the Tour feature so I can copy it to my "ID 2027" project, matching that project's new theme.
+
+**Claude**
+Wrote a self-contained feature brief: behaviour, technical design (Driver.js 1.14.0, Tour.html + include, step arrays, RTL/Arabic counter/تخطي, TourDone column, login hook, area highlight, form tours, book-icon guide button), the 15 main steps and form-tour texts, theme-matching notes, and lessons learned (text-only — no mascot; template-literal URL bug; read step data by index; floating buttons vs popup buttons; push ≠ deploy).
+
+**User**
+> How do I give you the ID 2027 folder?
+
+**Claude**
+Found it at `/home/amune/ID 2027` (own CLAUDE.md, deploy.sh, tests, and Claude memory). Recommended opening that folder in VS Code and starting a new Claude session there with the brief, so its own rules and theme load automatically.
+
+**User**
+> Save everything even our chats and push to my repo.
+
+**Claude**
+No code changes were pending; this chat-log entry committed and pushed. Live production version: `@59`.
